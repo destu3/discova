@@ -5,11 +5,54 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./output.css" />
-    <title>Discova | Easily Discover Anime</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+      integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>Discova - Easily Discover Anime</title>
   </head>
-  <body>
-    <h1 class="test">Hello Tailwind</h1>
+  <body class="font-roboto">
+    <nav class="w-full h-20">
+      <div
+        class="container mx-auto h-full flex items-center px-40 justify-between"
+      >
+        <div class="l-handside flex items-center">
+          <a href="./" class="w-16 h-16 block mr-10"
+            ><img src="../Discova-1.png" class="inline" alt="Discova logo"
+          /></a>
+          <ul class="links flex gap-6 cursor-pointer">
+            <li>Home</li>
+            <li>Anime</li>
+            <li>Manga</li>
+            <li>My List</li>
+          </ul>
+        </div>
+        <div class="r-handside">
+          <div
+            class="search-bar inline-block h-9 pl-2 pr-3 relative left-6 z-10 _hidden transition-all duration-300 bg-transparent rounded-2xl"
+          >
+            <i
+              class="fa-solid fa-magnifying-glass relative text-sm pt-1.5 pr-2 inline-block"
+            ></i>
+            <input
+              placeholder="Search anime, manga..."
+              type="text"
+              class="search-param text-sm bg-transparent pt-1.5"
+            />
+            <i
+              class="fa-solid fa-xmark text-lg pl-1 relative inline-block cursor-pointer hide-search-bar"
+            ></i>
+          </div>
 
+          <button class="search-btn relative top-0.5">
+            <i class="fa-solid fa-magnifying-glass text-xl"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
     <script type="module" src="./main.js"></script>
   </body>
 </html>
