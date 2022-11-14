@@ -1,12 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;1,400;1,500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-.test {
-  background: skyblue;
+:root {
+  --overlay-grey: #1e1e1e;
+  --background-grey: #121212;
+  --main-text: #d0d0d0;
+  --main-brand: #bb86fc;
+  --error-red: #cf6679;
 }
 
 .swiper {
   width: 600px;
   height: 300px;
+}
+
+body {
+  background: var(--background-grey);
+}
+
+nav {
+  background: var(--overlay-grey);
+}
+
+.links,
+.search-btn {
+  color: var(--main-text);
+}
+
+.links li {
+  transition: all 0.15s ease-in-out;
+  font-size: 0.9rem;
+}
+
+.links li:hover {
+  color: var(--main-brand);
+}
+
+._hidden {
+  opacity: 0;
+  transform: scale(0);
+}
+
+._visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.search-bar {
+  border: 2px var(--main-text) solid;
+  color: var(--main-text);
+  transform-origin: 100% 50%;
+  transition-timing-function: cubic-bezier(0.25, 0.75, 0.5, 1.05);
+}
+
+.search-bar .search-param:focus {
+  outline: none;
+}
+
+.search-bar .search-param::placeholder {
+  color: var(--main-text);
+}
+
+.r-handside div .fa-magnifying-glass {
+  top: 0.5px;
+}
+
+.fa-xmark {
+  top: 2px;
+  transition: all 0.2s ease-in-out;
+}
+
+.fa-xmark:hover {
+  color: var(--error-red);
 }
