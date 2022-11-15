@@ -1,4 +1,4 @@
-// contains nav bar functionality
+// contains functinality related to the navbar
 
 export const showSrchBar = function (searchBtn, searchBar) {
   searchBar.classList.add('_visible');

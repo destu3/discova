@@ -8,13 +8,9 @@
   --overlay-grey: #1e1e1e;
   --background-grey: #121212;
   --main-text: #d0d0d0;
+  --heading-grey: #929292;
   --main-brand: #bb86fc;
   --error-red: #cf6679;
-}
-
-.swiper {
-  width: 600px;
-  height: 300px;
 }
 
 body {
@@ -75,4 +71,60 @@ nav {
 
 .fa-xmark:hover {
   color: var(--error-red);
+}
+
+/* Corousel/slideshow styling */
+.sect-title {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+  color: var(--heading-grey);
+  font-weight: 500;
+}
+
+.swiper-slide {
+  transition: all 0.2s ease-in-out;
+}
+
+.title {
+  text-decoration: none;
+  color: var(--main-text);
+  font-weight: 500;
+  display: -webkit-box;
+  display: -moz-box;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+/*  */
+
+/* overiding some of swipers styles by force */
+.swiper-button-prev,
+.swiper-button-next {
+  top: 0 !important;
+  width: 50px !important;
+  margin-top: 0 !important;
+  height: 202.54px !important;
+  background: rgba(30, 30, 30, 0.5);
+  transition: opacity 0.2s ease-in-out;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  color: white;
+}
+
+.swiper:hover .swiper-button-next,
+.swiper:hover .swiper-button-prev {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.swiper-button-prev {
+  left: 0 !important;
+}
+
+.swiper-button-next {
+  right: 0 !important;
 }
