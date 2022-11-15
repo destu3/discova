@@ -17,20 +17,25 @@
   <body class="font-roboto">
     <nav class="w-full h-20">
       <div
-        class="container mx-auto h-full flex items-center px-40 justify-between"
+        class="container mx-auto h-full flex items-center px-2 md:px-4 lg:px-40 justify-between"
       >
         <div class="l-handside flex items-center">
-          <a href="./" class="w-16 h-16 block mr-10"
-            ><img src="../Discova-1.png" class="inline" alt="Discova logo"
+          <a
+            href="./"
+            class="h-fit flex justify-center items-center md:mr-10 mb-2"
+            ><img
+              src="../Discova-1.png"
+              class="inline h-14 w-auto"
+              alt="Discova logo"
           /></a>
-          <ul class="links flex gap-6 cursor-pointer">
+          <ul class="links hidden md:flex gap-6 cursor-pointer">
             <li>Home</li>
             <li>Anime</li>
             <li>Manga</li>
             <li>My List</li>
           </ul>
         </div>
-        <div class="r-handside">
+        <div class="r-handside hidden md:block">
           <div
             class="search-bar inline-block h-9 pl-2 pr-3 relative left-6 z-10 _hidden transition-all duration-300 bg-transparent rounded-2xl"
           >
@@ -53,6 +58,24 @@
         </div>
       </div>
     </nav>
+
+    <main class="container pt-7 pb-10 sm:w-full w-11/12 mx-auto">
+      <div
+        class="search-bar mobile-search-bar inline-block md:hidden h-9 pl-2 pr-3 w-full relative mb-10 bg-transparent rounded-2xl"
+      >
+        <i
+          class="fa-solid fa-magnifying-glass relative text-sm pt-1.5 pr-2 inline-block"
+        ></i>
+        <input
+          placeholder="Search anime, manga..."
+          type="text"
+          class="search-param text-sm bg-transparent pt-1.5"
+        />
+        <i
+          class="fa-solid fa-xmark text-lg absolute right-3 inline-block pt-1 cursor-pointer hide-search-bar"
+        ></i>
+      </div>
+    </main>
     <script type="module" src="./main.js"></script>
   </body>
 </html>
