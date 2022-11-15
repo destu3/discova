@@ -1,5 +1,10 @@
 import { showSrchBar, hideSrchBar } from './modules/nav';
-import { createTrendingSect } from './modules/featured_sect';
+import {
+  createTrending,
+  createPopularRn,
+  createPopular,
+  createUpcoming,
+} from './modules/featured_sect';
 
 // Dom selection
 const srchBtn = document.querySelector('.search-btn');
@@ -8,7 +13,10 @@ const hideSrchBarBtn = document.querySelector('.hide-search-bar');
 
 // event listners
 document.addEventListener('DOMContentLoaded', () => {
-  createTrendingSect();
+  createTrending();
+  createPopularRn();
+  createUpcoming();
+  createPopular();
 });
 
 srchBtn.addEventListener('click', () => {
