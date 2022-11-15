@@ -594,6 +594,11 @@ video {
   margin-right: auto;
 }
 
+.my-5{
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
 .mb-2{
   margin-bottom: 0.5rem;
 }
@@ -788,15 +793,6 @@ video {
   line-height: 1.75rem;
 }
 
-.text-base{
-  font-size: 1rem;
-  line-height: 1.5rem;
-}
-
-.text-\[0\.9rem\]{
-  font-size: 0.9rem;
-}
-
 .text-\[0\.8rem\]{
   font-size: 0.8rem;
 }
@@ -921,10 +917,6 @@ nav {
   font-weight: 500;
 }
 
-.swiper-slide {
-  transition: all 0.2s ease-in-out;
-}
-
 .title {
   text-decoration: none;
   color: var(--main-text);
@@ -955,7 +947,7 @@ nav {
 
 .swiper-button-prev::after,
 .swiper-button-next::after {
-  color: white;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .swiper:hover .swiper-button-next,
@@ -970,6 +962,10 @@ nav {
 
 .swiper-button-next {
   right: 0 !important;
+}
+
+.swiper-wrapper .swiper-slide {
+  transition: all 0.55s ease-in-out;
 }
 
 @media (min-width: 640px){
