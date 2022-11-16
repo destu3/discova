@@ -63,24 +63,19 @@ const getPopularRn = async function () {
   return data;
 };
 
-const createSeaction = function (sectName, sectTitle) {
+const createSeaction = function (sectName) {
   const mainSection = document.querySelector('main');
-  const section = `<section class="featured-sect my-5 ${sectName} w-full">
-        <h1 class="sect-title">${sectTitle}</h1>
-        <div
-          class="swiper mySwiper slider w-full"
-        >
-          <div class="swiper-wrapper media-wrapper"></div>
-          <div class="swiper-button-next !h-[202.54px] md:!h-[265px]"></div>
-          <div class="swiper-button-prev !h-[202.54px] md:!h-[265px]"></div>
-        </div>
-      </section>
+  const section = `<div
+      class="${sectName} swiper mySwiper slider w-full featured-sect"
+    >
+      <div class="swiper-wrapper media-wrapper"></div>
+      <div class="swiper-button-next !h-[202.54px] md:!h-[265px]"></div>
+      <div class="swiper-button-prev !h-[202.54px] md:!h-[265px]"></div>
+    </div>
     `;
 
   mainSection.insertAdjacentHTML('beforeend', section);
-  const sectWrapper = document.querySelector(
-    `.featured-sect.${sectName} .swiper .swiper-wrapper`
-  );
+  const sectWrapper = document.querySelector(`.${sectName} .swiper-wrapper`);
   return sectWrapper;
 };
 
@@ -104,26 +99,20 @@ const createMediaCard = function (media) {
   return mediaCard;
 };
 
-const createFeaturedSect = function (sectName, sectTitle, cb) {
+const createFeaturedSect = function (sectName, cb) {
   // swiper slider configuration
-  let swiper = new Swiper(`.${sectName} .mySwiper`, {
+  let swiper = new Swiper(`.${sectName}.mySwiper`, {
     slidesPerView: 'auto',
-    init: false,
-    effect: 'slide',
-    speed: 1250,
-    slidesPerGroupAuto: true, //use false for smaller screens
-    slidedPerGroup: 2,
-    spaceBetween: 25,
-    pagination: {
-      clickable: true,
-    },
+    speed: 1500,
+    slidesPerGroup: 1,
+    spaceBetween: 10,
     navigation: {
       nextEl: '.swiper-button-next',
       prevEl: '.swiper-button-prev',
     },
   });
 
-  const sectWrapper = createSeaction(sectName, sectTitle);
+  const sectWrapper = createSeaction(sectName);
   cb().then(result => {
     result.data.forEach(anime => {
       const card = createMediaCard(anime);
@@ -154,34 +143,29 @@ const createFeaturedSect = function (sectName, sectTitle, cb) {
 };
 
 export const createTrending = function () {
-  createFeaturedSect('trending', 'Trending', getTrending);
+  createFeaturedSect('trending', getTrending);
 };
 
 export const createPopularRn = function () {
-  createFeaturedSect(
-    'popular-this-season',
-    'Popular this season ',
-    getPopularRn
-  );
+  createFeaturedSect('popular-this-season', getPopularRn);
 };
 
 export const createPopular = function () {
-  createFeaturedSect('popular', 'All time popular', getPopular);
+  createFeaturedSect('popular', getPopular);
 };
 
 export const createUpcoming = function () {
-  createFeaturedSect('upcoming', 'Coming soon', getUpcoming);
+  createFeaturedSect('upcoming', getUpcoming);
 };
 
 // funcion shows basic anime details when mouse is hovered over
 function showdets_basic(wrapper) {
   if (this === wrapper.firstChild) {
-    wrapper.querySelector('.swiper-slide').style.marginLeft = '120px';
+    wrapper.querySelector('.swiper-slide').style.marginLeft = '95px';
   } else if (this === wrapper.lastChild) {
-    wrapper.querySelector('.swiper-slide').style.marginLeft = '-120px';
+    wrapper.querySelector('.swiper-slide').style.marginLeft = '-95px';
   }
-  this.style.rotate = '-90deg';
-  this.style.transform = 'scale(1.5)';
+  this.style.transform = 'scale(1.46)';
   this.style.zIndex = 2;
 }
 
@@ -192,7 +176,6 @@ function hidedets_basic(wrapper) {
   } else if (this === wrapper.lastChild) {
     wrapper.querySelector('.swiper-slide').style.marginLeft = '0';
   }
-  this.style.rotate = 'none';
   this.style.transform = 'scale(1)';
   this.style.zIndex = 1;
 }
