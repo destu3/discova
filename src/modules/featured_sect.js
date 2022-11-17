@@ -2,65 +2,36 @@
 import Swiper from 'swiper/bundle';
 // import styles bundle
 import 'swiper/css/bundle';
+import { getMedia, QUERIES_AND_VARIABLES } from './gql';
 
-// contains functionality realated to featured section on landing page
+// contains functionality realated to featured sections on landing page
 
-function getSeason() {
-  const date = new Date();
-  const month = date.getMonth() + 1;
-  let season = 'winter';
-
-  if (month >= 10 && month <= 12) {
-    season = 'fall';
-  } else if (month >= 4 && month <= 6) {
-    season = 'spring';
-  } else if (month >= 7 && month <= 9) {
-    season = 'summer';
-  }
-  return season;
-}
-
-function getNextSeason(season) {
-  if (season === 'winter') {
-    return 'spring';
-  } else if (season === 'spring') {
-    return 'summer';
-  } else if (season === 'summer') {
-    return 'fall';
-  } else {
-    return 'winter';
-  }
-}
-
-const getTrending = async function () {
-  const res = await fetch('https://kitsu.io/api/edge/trending/anime?limit=20&');
-  const data = await res.json();
-  return data;
+const getTrending = function () {
+  return getMedia(
+    QUERIES_AND_VARIABLES.trending.query,
+    QUERIES_AND_VARIABLES.trending.variable
+  );
 };
 
-const getPopular = async function () {
-  const res = await fetch(
-    'https://kitsu.io/api/edge/anime?page[limit]=20&sort=popularityRank'
+const getPopularRn = function () {
+  return getMedia(
+    QUERIES_AND_VARIABLES.popularAiring.query,
+    QUERIES_AND_VARIABLES.popularAiring.variable
   );
-  const data = await res.json();
-  return data;
 };
 
-const getUpcoming = async function () {
-  const res = await fetch(
-    `https://kitsu.io/api/edge/anime?page[limit]=20&filter[status]=unreleased&filter[status]=upcoming`
+const getUpcoming = function () {
+  return getMedia(
+    QUERIES_AND_VARIABLES.popularNextSeason.query,
+    QUERIES_AND_VARIABLES.popularNextSeason.variable
   );
-  const data = await res.json();
-  return data;
 };
 
-const getPopularRn = async function () {
-  const date = new Date();
-  const res = await fetch(
-    `https://kitsu.io/api/edge/anime?page[limit]=20&filter[season]=${getSeason()}&filter[seasonYear]=${date.getFullYear()}&sort=-averageRating`
+const getPopular = function () {
+  return getMedia(
+    QUERIES_AND_VARIABLES.allTimePopular.query,
+    QUERIES_AND_VARIABLES.allTimePopular.variable
   );
-  const data = await res.json();
-  return data;
 };
 
 const createSeaction = function (sectName, sectTitle) {
@@ -85,13 +56,11 @@ const createMediaCard = function (media) {
     <div class="cover w-full cursor-pointer rounded-md overflow-hidden z-10 inline-block"
       ><img
       class="w-full h-[202.54px] md:h-[265px] object-cover" src="${
-        media.attributes.posterImage.large
+        media.coverImage.extraLarge
       }" alt=""/>
     </div>
     <a href="" class="title text-[0.8rem] md:text-[0.9rem] pt-1 inline-block w-[140px] md:w-[180px] overflow-hidden text-ellipsis">${
-      media.attributes.titles.en ||
-      media.attributes.titles.en_jp ||
-      media.attributes.titles.ja_jp
+      media.title?.english || media.title?.romaji || media.title?.native
     }</a>
   </div>
     `;
@@ -131,7 +100,7 @@ const createFeaturedSect = function (sectName, sectTitle, cb) {
 
   const sectWrapper = createSeaction(sectName, sectTitle);
   cb().then(result => {
-    result.data.forEach(anime => {
+    result.forEach(anime => {
       const card = createMediaCard(anime);
       sectWrapper.insertAdjacentHTML('beforeend', card);
     });
@@ -143,7 +112,7 @@ const createFeaturedSect = function (sectName, sectTitle, cb) {
       card.addEventListener('mouseover', function () {
         timeoutId = setTimeout(function () {
           showdets_basic.call(card, sectWrapper);
-        }, 500);
+        }, 650);
       });
 
       card.addEventListener('mouseout', function () {
@@ -197,12 +166,10 @@ function showdets_basic(wrapper) {
   const translatedX = getTransX(wrapper);
   if (this === wrapper.firstElementChild) {
     swiper.setTranslate(50);
-    console.log(swiper.translate);
   }
 
   if (this === wrapper.lastElementChild) {
     swiper.setTranslate(Number(translatedX) - 50);
-    console.log(swiper.translate);
   }
 
   this.style.transform = 'scale(1.55)';
@@ -216,12 +183,10 @@ function hidedets_basic(wrapper) {
 
   if (this === wrapper.firstElementChild) {
     swiper.slideToClosest(1250);
-    console.log(swiper.translate);
   }
 
   if (this === wrapper.lastElementChild) {
     swiper.slideToClosest(1250);
-    console.log(swiper.translate);
   }
 
   this.style.transform = 'scale(1)';
