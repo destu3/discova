@@ -97,7 +97,7 @@ nav {
 /* overiding some of swipers styles by force */
 .swiper-button-prev,
 .swiper-button-next {
-  top: 70px !important;
+  top: 104px !important;
   width: 50px !important;
   margin-top: 0 !important;
   height: 202.54px !important;
@@ -118,6 +118,12 @@ nav {
   pointer-events: all;
 }
 
+.swiper-button-next.swiper-button-disabled,
+.swiper-button-prev.swiper-button-disabled {
+  display: none !important;
+  pointer-events: all !important;
+}
+
 .swiper-button-prev {
   left: 0 !important;
 }
@@ -127,11 +133,13 @@ nav {
 }
 
 .swiper-wrapper .swiper-slide {
-  transition: all 0.35s ease-in-out;
+  transition: transform 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
 }
 
 .swiper-wrapper {
+  transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1) !important;
   padding-top: 70px;
+  padding-bottom: 20px;
 }
 
 /* .trailer-container {
