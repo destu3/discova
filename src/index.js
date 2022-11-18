@@ -14,9 +14,9 @@ const hideSrchBarBtn = document.querySelector('.hide-search-bar');
 // event listners
 document.addEventListener('DOMContentLoaded', () => {
   createTrending();
-  // createPopularRn();
-  // createUpcoming();
-  // createPopular();
+  createPopularRn();
+  createUpcoming();
+  createPopular();
 });
 
 srchBtn.addEventListener('click', () => {
