@@ -73,7 +73,6 @@ nav {
   color: var(--error-red);
 }
 
-/* Corousel/slideshow styling */
 .sect-title {
   position: relative;
   top: 50px;
@@ -92,54 +91,31 @@ nav {
   line-clamp: 2;
   -webkit-box-orient: vertical;
 }
-/*  */
 
-/* overiding some of swipers styles by force */
-.swiper-button-prev,
-.swiper-button-next {
-  top: 109px !important;
-  width: 50px !important;
-  margin-top: 0 !important;
-  height: 202.54px !important;
-  background: rgba(30, 30, 30, 0.5);
-  transition: opacity 0.2s ease-in-out;
-  opacity: 0;
-  pointer-events: none;
+.media-card,
+.cover,
+.details-overlay,
+.title {
+  transition: all 0.3s ease-in-out;
 }
 
-.swiper-button-prev::after,
-.swiper-button-next::after {
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.swiper:hover .swiper-button-next,
-.swiper:hover .swiper-button-prev {
-  opacity: 1;
-  pointer-events: all;
-}
-
-.swiper-button-prev {
-  left: 0 !important;
-}
-
-.swiper-button-next {
-  right: 0 !important;
-}
-
-.swiper-wrapper .swiper-slide {
-  transition: transform 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
-}
-
-.swiper-wrapper {
-  transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+.media-wrapper {
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
   padding-top: 75px;
   padding-bottom: 25px;
+  display: grid;
+  grid-gap: 25px 20px;
+  grid-template-columns: repeat(auto-fill, minmax(144px, 1fr));
+  justify-content: space-between;
 }
 
-.cover,
-.details-overlay {
-  transition: all 0.25s ease-in-out;
+@media screen and (min-width: 1024px) {
+  .media-wrapper {
+    grid-template-columns: repeat(auto-fill, 185px);
+    grid-gap: 28px 30px;
+  }
 }
+
 /* .trailer-container {
   top: 0;
   left: 0;
@@ -151,7 +127,18 @@ nav {
   padding-top: 56.25%; /* 16:9 Aspect Ratio (divide 9 by 16 = 0.5625) */
 /* }
 
-.trailer {
+/* .swiper-slide:hover .cover {
+  opacity: 0;
+}
+
+.swiper-slide:hover .details-overlay {
+  opacity: 1;
+}
+iframe {
+  cursor: pointer;
+} */
+
+/* .trailer {
   transition: all 0.2s ease-in-out;
   position: absolute;
   top: 0;
@@ -161,15 +148,5 @@ nav {
   width: 100%;
   height: 100%;
   opacity: 0;
-} */
-
-/* .swiper-slide:hover .cover {
-  opacity: 0;
-}
-
-.swiper-slide:hover .details-overlay {
-  opacity: 1;
-}
-iframe {
   cursor: pointer;
 } */

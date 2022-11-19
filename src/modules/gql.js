@@ -1,5 +1,4 @@
 // config for gql api requests
-
 const DEFAULT_FIELDS = `id
   title {
     romaji
