@@ -33,6 +33,7 @@ const DEFAULT_FIELDS = `id
     large
     color
   }
+  source
   description
   averageScore
   popularity
@@ -42,6 +43,11 @@ const DEFAULT_FIELDS = `id
     timeUntilAiring
     episode
   }`;
+
+function getYear() {
+  const date = new Date();
+  return date.getFullYear();
+}
 
 function getSeason() {
   const date = new Date();
@@ -55,7 +61,7 @@ function getSeason() {
   } else if (month >= 7 && month <= 9) {
     season = 'summer';
   }
-  return season;
+  return season.toUpperCase();
 }
 
 function getNextSeason(season) {
@@ -78,7 +84,7 @@ export const QUERIES_AND_VARIABLES = {
             total
             perPage
           }
-          media(type: ANIME, status: RELEASING, sort: POPULARITY_DESC) {
+          media(type: ANIME, season: ${getSeason()}, seasonYear: ${getYear()}, sort: POPULARITY_DESC) {
             ${DEFAULT_FIELDS}
           }
         }
@@ -86,7 +92,7 @@ export const QUERIES_AND_VARIABLES = {
       `,
     variable: {
       page: 1,
-      perPage: 20,
+      perPage: 7,
     },
   },
   popularNextSeason: {
@@ -106,7 +112,7 @@ export const QUERIES_AND_VARIABLES = {
     `,
     variable: {
       page: 1,
-      perPage: 20,
+      perPage: 7,
     },
   },
   allTimePopular: {
@@ -124,7 +130,7 @@ export const QUERIES_AND_VARIABLES = {
       `,
     variable: {
       page: 1,
-      perPage: 20,
+      perPage: 7,
     },
   },
   trending: {
@@ -142,7 +148,7 @@ export const QUERIES_AND_VARIABLES = {
       `,
     variable: {
       page: 1,
-      perPage: 20,
+      perPage: 7,
     },
   },
 };

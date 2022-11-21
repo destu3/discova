@@ -7,7 +7,7 @@
 :root {
   --overlay-grey: #1e1e1e;
   --background-grey: #121212;
-  --main-text: #d0d0d0;
+  --main-text: #b9b7b7;
   --heading-grey: #929292;
   --main-brand: #bb86fc;
   --error-red: #cf6679;
@@ -74,8 +74,6 @@ nav {
 }
 
 .sect-title {
-  position: relative;
-  top: 50px;
   font-size: 1.4rem;
   color: var(--heading-grey);
   font-weight: 500;
@@ -101,12 +99,19 @@ nav {
 
 .media-wrapper {
   transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-  padding-top: 75px;
-  padding-bottom: 25px;
   display: grid;
   grid-gap: 25px 20px;
   grid-template-columns: repeat(auto-fill, minmax(144px, 1fr));
   justify-content: space-between;
+}
+
+.basic-dets-synopsis {
+  display: -webkit-box;
+  display: -moz-box;
+  -webkit-line-clamp: 5; /* number of lines to show */
+  line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow-y: hidden;
 }
 
 @media screen and (min-width: 1024px) {
