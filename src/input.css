@@ -114,44 +114,13 @@ nav {
   overflow-y: hidden;
 }
 
+.cover {
+  transform-origin: left center;
+}
+
 @media screen and (min-width: 1024px) {
   .media-wrapper {
     grid-template-columns: repeat(auto-fill, 185px);
     grid-gap: 28px 30px;
   }
 }
-
-/* .trailer-container {
-  top: 0;
-  left: 0;
-  height: 0;
-  position: absolute;
-  overflow: hidden;
-  height: 40%;
-  width: 100%;
-  padding-top: 56.25%; /* 16:9 Aspect Ratio (divide 9 by 16 = 0.5625) */
-/* }
-
-/* .swiper-slide:hover .cover {
-  opacity: 0;
-}
-
-.swiper-slide:hover .details-overlay {
-  opacity: 1;
-}
-iframe {
-  cursor: pointer;
-} */
-
-/* .trailer {
-  transition: all 0.2s ease-in-out;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  cursor: pointer;
-} */

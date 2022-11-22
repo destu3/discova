@@ -60,7 +60,7 @@ function formatSource(source) {
 }
 
 function createGenreTag(genre) {
-  return `<div class="genre min-w-[30px] text-center rounded-[10px] font-semibold text-[6px] py-[2px] px-2 bg-[var(--main-brand)] text-[var(--overlay-grey)]">${genre}</div>`;
+  return `<div class="genre text-center rounded-[10px] font-medium text-[0.4rem] pl-[2px] text-[var(--main-brand)]">${genre}</div>`;
 }
 
 function displayCountdown(media) {
@@ -74,7 +74,6 @@ function displayCountdown(media) {
 }
 
 export const createMediaCard = function (media) {
-  console.log(media);
   const genres = media.genres.slice(0, 3);
   const mediaCard = `<div class="media-card cursor-pointer relative max-w-[144px] md:max-w-[185px] h-fit rounded-md" data-video_id =${
     media.trailer?.id
@@ -88,7 +87,7 @@ export const createMediaCard = function (media) {
       <a href="" class="title text-[0.8rem] md:text-[0.9rem] pt-1 inline-block w-[140px] md:w-[180px] overflow-hidden text-ellipsis">${
         media.title?.english || media.title?.romaji || media.title?.native
       }</a>
-      <div class="details-overlay overflow-hidden rounded-md bg-[var(--overlay-grey)] opacity-0 absolute w-full left-0 top-0">
+      <div class="details-overlay overflow-hidden rounded-md bg-[var(--overlay-grey)] opacity-0 absolute w-full left-0 top-[50px]">
       <div class="trailer-container relative w-full overflow-hidden pt-[56.25%]">
         <iframe
         class="trailer absolute top-0 left-0 right-0 bottom-0 w-full h-full rounded-t-md"
@@ -148,16 +147,17 @@ function isNearEdge(el) {
 function transDir(el) {
   const xCoordinate = el.getBoundingClientRect().x;
   // determine what side of viewport the element is in
-  return xCoordinate < window.innerWidth / 2 ? '120px' : '-120px';
+  return xCoordinate < window.innerWidth / 2 ? '150px' : '-150px';
 }
 
 // funcion shows basic anime details when mouse is hovered over
 export function showdets_basic() {
   const trailer = this.querySelector('iframe.trailer');
   this.style.zIndex = 999;
-  this.style.transform = 'scale(2)';
+  this.style.transform = 'scale(2.4)';
+  this.querySelector('.cover').style.transform = 'scale(0)';
   this.querySelector('.cover').style.opacity = 0;
-  this.querySelector('.title').style.opacity = 0;
+  this.querySelector('.title').style.opacity = '0';
   this.querySelector('.details-overlay').style.opacity = 1;
   if (isNearEdge(this)) this.style.translate = transDir(this);
   if (trailer.src === window.location.href) {
@@ -170,13 +170,14 @@ export function showdets_basic() {
 // function negates the effect of showdetails_basic()
 export function hidedets_basic() {
   const trailer = this.querySelector('iframe.trailer');
+  this.querySelector('.details-overlay').style.opacity = 0;
+  this.querySelector('.cover').style.opacity = 1;
   trailer.src = ``;
-  this.style.zIndex = 1;
+  this.querySelector('.cover').style.transform = 'scale(1)';
   this.style.transform = 'scale(1)';
   this.style.translate = '0';
   setTimeout(() => {
-    this.querySelector('.details-overlay').style.opacity = 0;
-    this.querySelector('.cover').style.opacity = 1;
-    this.querySelector('.title').style.opacity = 1;
-  }, 150);
+    this.style.zIndex = 1;
+    this.querySelector('.title').style.opacity = '1';
+  }, 100);
 }

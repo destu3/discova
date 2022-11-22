@@ -34,7 +34,7 @@ const getPopular = function () {
 const createSeaction = function (sectName, sectTitle) {
   const mainSection = document.querySelector('main');
   const section = `
-    <section class="${sectName} results-container w-full featured-sect relative bottom-6 my-10">
+    <section class="${sectName} results-container w-full featured-sect relative bottom-6 mt-10">
 
       <div class=" section-header pb-[20px] flex justify-between items-center">
         <h2 class="sect-title">${sectTitle}</h2>

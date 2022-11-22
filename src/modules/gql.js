@@ -17,6 +17,7 @@ const DEFAULT_FIELDS = `id
     month
     day
   }
+  source
   season
   seasonYear
   format
@@ -33,7 +34,6 @@ const DEFAULT_FIELDS = `id
     large
     color
   }
-  source
   description
   averageScore
   popularity
