@@ -18,7 +18,11 @@ body {
 }
 
 nav {
-  background: var(--overlay-grey);
+  /* background: var(--overlay-grey); */
+  position: fixed;
+  top: 0;
+  z-index: 51;
+  transition: all 0.3s ease-in-out;
 }
 
 .links,
@@ -114,8 +118,9 @@ nav {
   overflow-y: hidden;
 }
 
-.cover {
-  transform-origin: left center;
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  color: var(--main-brand);
 }
 
 @media screen and (min-width: 1024px) {
@@ -123,4 +128,36 @@ nav {
     grid-template-columns: repeat(auto-fill, 185px);
     grid-gap: 28px 30px;
   }
+}
+
+.view-info {
+  transition: all 0.1s ease-in-out;
+}
+
+.view-info:hover {
+  border-color: var(--main-brand);
+}
+
+.view-info:hover i {
+  color: var(--main-brand);
+}
+
+.hero-img {
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  transition: all 0.3s ease-in-out;
+  transform-origin: left center;
+}
+
+.basic-dets-play i {
+  transition: all 0.1s ease-in-out;
+}
+
+.basic-dets-play:hover i {
+  color: var(--main-brand);
+}
+
+.hq-thumbnail {
+  transition: all 0.3s ease-in-out;
 }

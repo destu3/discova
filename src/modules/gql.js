@@ -1,5 +1,6 @@
 // config for gql api requests
 const DEFAULT_FIELDS = `id
+  idMal
   title {
     romaji
     english
@@ -178,3 +179,9 @@ export async function getMedia(query, variables) {
   let data = await response.json();
   return data.data.Page.media;
 }
+
+const simklHeaders = {
+  'Content-Type': 'application/json',
+  'simkl-api-key':
+    '35e73573cc4f3eb066d6b5718a593ca24599e61c923e0704236d81bc118d0902',
+};

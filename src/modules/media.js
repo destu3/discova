@@ -75,18 +75,18 @@ function displayCountdown(media) {
 
 export const createMediaCard = function (media) {
   const genres = media.genres.slice(0, 3);
-  const mediaCard = `<div class="media-card cursor-pointer relative max-w-[144px] md:max-w-[185px] h-fit rounded-md" data-video_id =${
+  const mediaCard = `<div class="media-card relative max-w-[144px] md:max-w-[185px] h-fit rounded-md" data-video_id =${
     media.trailer?.id
   } data-media_id=${media.id}>
-      <div class="cover w-full cursor-pointer rounded-md relative overflow-hidden inline-block"
+      <div class="cover z-50 cursor-pointer w-full rounded-md relative overflow-hidden inline-block"
         ><img
         class="w-full h-[202.54px] md:h-[265px] relative object-cover" src="${
           media.coverImage.extraLarge
         }" alt=""/>
       </div>
-      <a href="" class="title text-[0.8rem] md:text-[0.9rem] pt-1 inline-block w-[140px] md:w-[180px] overflow-hidden text-ellipsis">${
+      <div href="" class="title text-[0.8rem] md:text-[0.9rem] pt-1 inline-block w-[140px] md:w-[180px] overflow-hidden text-ellipsis">${
         media.title?.english || media.title?.romaji || media.title?.native
-      }</a>
+      }</div>
       <div class="details-overlay overflow-hidden rounded-md bg-[var(--overlay-grey)] opacity-0 absolute w-full left-0 top-[50px]">
       <div class="trailer-container relative w-full overflow-hidden pt-[56.25%]">
         <iframe
@@ -124,14 +124,19 @@ export const createMediaCard = function (media) {
        ${media.description}
       </p>
       <div
-        class="genres flex justify-center items-center gap-1 pl-1 absolute pb-2 bottom-0 left-0"
+        class="genres flex justify-center items-center gap-1 pl-1 absolute bottom-2 left-0"
       >
       ${genres.map(genre => createGenreTag(genre)).join('')}
       </div>
+      <button title="view info & episodes" class="view-info flex justify-center items-center more-dets 
+      border-[var(--main-text)] border-solid border-[1px] rounded-[50%] h-3 w-3 absolute bottom-2 right-2"> 
+        <i class="fa-solid fa-chevron-down text-[var(--main-text)] text-[6px]"></i> 
+      </button>
     </div>
     </div>
     </div>
       `;
+
   return mediaCard;
 };
 
@@ -154,12 +159,16 @@ function transDir(el) {
 export function showdets_basic() {
   const trailer = this.querySelector('iframe.trailer');
   this.style.zIndex = 999;
-  this.style.transform = 'scale(2.4)';
-  this.querySelector('.cover').style.transform = 'scale(0)';
+  this.querySelector('.details-overlay').style.transform = 'scale(2.5)';
+
+  setTimeout(() => {
+    this.querySelector('.cover').style.transform = 'scale(0)';
+  }, 300);
   this.querySelector('.cover').style.opacity = 0;
   this.querySelector('.title').style.opacity = '0';
   this.querySelector('.details-overlay').style.opacity = 1;
-  if (isNearEdge(this)) this.style.translate = transDir(this);
+  if (isNearEdge(this))
+    this.querySelector('.details-overlay').style.translate = transDir(this);
   if (trailer.src === window.location.href) {
     setTimeout(() => {
       trailer.src = `https://www.youtube-nocookie.com/embed/${this.dataset.video_id}?controls=0`;
@@ -171,13 +180,14 @@ export function showdets_basic() {
 export function hidedets_basic() {
   const trailer = this.querySelector('iframe.trailer');
   this.querySelector('.details-overlay').style.opacity = 0;
-  this.querySelector('.cover').style.opacity = 1;
-  trailer.src = ``;
+
   this.querySelector('.cover').style.transform = 'scale(1)';
-  this.style.transform = 'scale(1)';
-  this.style.translate = '0';
+  trailer.src = ``;
+  this.querySelector('.details-overlay').style.transform = 'scale(1)';
+  this.querySelector('.details-overlay').style.translate = '0';
   setTimeout(() => {
+    this.querySelector('.cover').style.opacity = 1;
     this.style.zIndex = 1;
     this.querySelector('.title').style.opacity = '1';
-  }, 100);
+  }, 200);
 }

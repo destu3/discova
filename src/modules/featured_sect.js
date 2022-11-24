@@ -59,11 +59,12 @@ const createFeaturedSect = function (sectName, sectTitle, cb) {
 
     let timeoutId = null;
     const mediaCards = document.querySelectorAll(`.${sectName} .media-card`);
+    console.log(mediaCards);
     mediaCards.forEach(card => {
-      card.addEventListener('mouseenter', function (e) {
+      card.addEventListener('mouseenter', function () {
         timeoutId = setTimeout(function () {
           showdets_basic.call(card);
-        }, 400);
+        }, 600);
       });
 
       card.addEventListener('mouseleave', function () {
