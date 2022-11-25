@@ -19,7 +19,6 @@
     "webpack-cli": "^4.10.0"
   },
   "dependencies": {
-    "swiper": "^8.4.5",
-    "youtube-player": "^5.5.2"
+    "swiper": "^8.4.5"
   }
 }
