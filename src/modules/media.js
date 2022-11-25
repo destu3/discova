@@ -89,6 +89,9 @@ export const createMediaCard = function (media) {
       }</div>
       <div class="details-overlay overflow-hidden rounded-md bg-[var(--overlay-grey)] opacity-0 absolute w-full left-0 top-[50px]">
       <div class="trailer-container relative w-full overflow-hidden pt-[56.25%]">
+        <img src="http://i.ytimg.com/vi/${
+          media.trailer?.id
+        }/maxresdefault.jpg" class="hq-thumbnail absolute top-0 bottom-0 right-0 left-0 w-full h-full rounded-t-md z-50" alt="high quality thumbnail">
         <iframe
         class="trailer absolute top-0 left-0 right-0 bottom-0 w-full h-full rounded-t-md"
         src=""
@@ -128,9 +131,13 @@ export const createMediaCard = function (media) {
       >
       ${genres.map(genre => createGenreTag(genre)).join('')}
       </div>
+      <button title="view info & episodes" class="add-basic flex justify-center items-center
+      border-[var(--main-text)] border-solid border-[1px] rounded-[50%] h-4 w-4 absolute bottom-2 right-7"> 
+        <i class="fa-solid fa-plus text-[var(--main-text)] text-[8px]"></i> 
+      </button>
       <button title="view info & episodes" class="view-info flex justify-center items-center more-dets 
-      border-[var(--main-text)] border-solid border-[1px] rounded-[50%] h-3 w-3 absolute bottom-2 right-2"> 
-        <i class="fa-solid fa-chevron-down text-[var(--main-text)] text-[6px]"></i> 
+      border-[var(--main-text)] border-solid border-[1px] rounded-[50%] h-4 w-4 absolute bottom-2 right-2"> 
+        <i class="fa-solid fa-chevron-down text-[var(--main-text)] text-[8px]"></i> 
       </button>
     </div>
     </div>
@@ -155,12 +162,23 @@ function transDir(el) {
   return xCoordinate < window.innerWidth / 2 ? '150px' : '-150px';
 }
 
+function hideThumbnail() {
+  this.style.pointerEvents = 'none';
+  this.style.opacity = 0;
+}
+
+function setThumbnail() {
+  this.style.pointerEvents = 'auto';
+  this.style.opacity = 1;
+}
+
 // funcion shows basic anime details when mouse is hovered over
 export function showdets_basic() {
   const trailer = this.querySelector('iframe.trailer');
+  const thumbnail = this.querySelector('.hq-thumbnail');
+  thumbnail.addEventListener('mouseover', hideThumbnail);
   this.style.zIndex = 999;
   this.querySelector('.details-overlay').style.transform = 'scale(2.5)';
-
   setTimeout(() => {
     this.querySelector('.cover').style.transform = 'scale(0)';
   }, 300);
@@ -171,7 +189,7 @@ export function showdets_basic() {
     this.querySelector('.details-overlay').style.translate = transDir(this);
   if (trailer.src === window.location.href) {
     setTimeout(() => {
-      trailer.src = `https://www.youtube-nocookie.com/embed/${this.dataset.video_id}?controls=0`;
+      trailer.src = `https://www.youtube-nocookie.com/embed/${this.dataset.video_id}?controls=0&rel=0`;
     }, 200);
   }
 }
@@ -179,8 +197,9 @@ export function showdets_basic() {
 // function negates the effect of showdetails_basic()
 export function hidedets_basic() {
   const trailer = this.querySelector('iframe.trailer');
+  const thumbnail = this.querySelector('.hq-thumbnail');
   this.querySelector('.details-overlay').style.opacity = 0;
-
+  setThumbnail.call(thumbnail);
   this.querySelector('.cover').style.transform = 'scale(1)';
   trailer.src = ``;
   this.querySelector('.details-overlay').style.transform = 'scale(1)';

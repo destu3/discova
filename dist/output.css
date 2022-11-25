@@ -625,6 +625,18 @@ video {
   bottom: 0.5rem;
 }
 
+.right-5{
+  right: 1.25rem;
+}
+
+.right-6{
+  right: 1.5rem;
+}
+
+.right-7{
+  right: 1.75rem;
+}
+
 .z-10{
   z-index: 10;
 }
@@ -741,6 +753,10 @@ video {
   height: 0.75rem;
 }
 
+.h-4{
+  height: 1rem;
+}
+
 .w-full{
   width: 100%;
 }
@@ -755,6 +771,10 @@ video {
 
 .w-3{
   width: 0.75rem;
+}
+
+.w-4{
+  width: 1rem;
 }
 
 .max-w-\[75\%\]{
@@ -969,6 +989,10 @@ video {
   font-size: 6px;
 }
 
+.text-\[8px\]{
+  font-size: 8px;
+}
+
 .font-light{
   font-weight: 300;
 }
@@ -1073,7 +1097,7 @@ nav {
   position: fixed;
   top: 0;
   z-index: 51;
-  transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in-out;
 }
 
 .links,
@@ -1187,15 +1211,18 @@ nav {
   }
 }
 
-.view-info {
+.view-info,
+.add-basic {
   transition: all 0.1s ease-in-out;
 }
 
-.view-info:hover {
+.view-info:hover,
+.add-basic:hover {
   border-color: var(--main-brand);
 }
 
-.view-info:hover i {
+.view-info:hover i,
+.add-basic:hover i {
   color: var(--main-brand);
 }
 
@@ -1270,14 +1297,8 @@ nav {
   transform: translateY(0);
 }
 
-.hero.more-info {
-  background-color: #1a1a1a;
-  color: #fff;
-}
-
-.hero.more-info:hover {
-  background-color: #fff;
-  color: #1a1a1a;
+.hq-thumbnail {
+  transition: all 0.3s ease-in-out;
 }
 
 @media (min-width: 768px){

@@ -22,7 +22,7 @@ nav {
   position: fixed;
   top: 0;
   z-index: 51;
-  transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in-out;
 }
 
 .links,
@@ -130,15 +130,18 @@ nav {
   }
 }
 
-.view-info {
+.view-info,
+.add-basic {
   transition: all 0.1s ease-in-out;
 }
 
-.view-info:hover {
+.view-info:hover,
+.add-basic:hover {
   border-color: var(--main-brand);
 }
 
-.view-info:hover i {
+.view-info:hover i,
+.add-basic:hover i {
   color: var(--main-brand);
 }
 
@@ -209,12 +212,6 @@ nav {
   transform: translateY(0);
 }
 
-.hero.more-info {
-  background-color: #1a1a1a;
-  color: #fff;
-}
-
-.hero.more-info:hover {
-  background-color: #fff;
-  color: #1a1a1a;
+.hq-thumbnail {
+  transition: all 0.3s ease-in-out;
 }

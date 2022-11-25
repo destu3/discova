@@ -58,11 +58,10 @@ export async function alternateHeroImgs() {
 function setHero(heroData) {
   let swiper = new Swiper('.mySwiper', {
     spaceBetween: 30,
-    speed: 1000,
+    speed: 800,
     spaceBetween: 0,
     slidesPerView: 1,
     simulateTouch: false,
-    effect: 'coverflow',
     autoplay: {
       delay: 10000,
       disableOnInteraction: false,
