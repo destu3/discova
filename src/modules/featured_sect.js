@@ -10,7 +10,7 @@ const getTrending = function () {
   );
 };
 
-const getPopularRn = function () {
+const getPopularRn = async function () {
   return getMedia(
     QUERIES_AND_VARIABLES.popularAiring.query,
     QUERIES_AND_VARIABLES.popularAiring.variable
@@ -34,8 +34,7 @@ const getPopular = function () {
 const createSeaction = function (sectName, sectTitle) {
   const mainSection = document.querySelector('main');
   const section = `
-    <section class="${sectName} results-container w-full featured-sect relative bottom-6 mt-10">
-
+    <section class="${sectName} results-container w-full featured-sect relative bottom-6 mt-10 sm:px-0">
       <div class=" section-header pb-[20px] flex justify-between items-center">
         <h2 class="sect-title">${sectTitle}</h2>
         <a class=" text-[var(--main-brand)] text-xs font-light cursor-pointer">View more</a>
@@ -43,7 +42,6 @@ const createSeaction = function (sectName, sectTitle) {
       <div class="media-wrapper"></div>
     </section>
     `;
-
   mainSection.insertAdjacentHTML('beforeend', section);
   const sectWrapper = document.querySelector(`.${sectName} .media-wrapper`);
   return sectWrapper;
@@ -55,6 +53,10 @@ const createFeaturedSect = function (sectName, sectTitle, cb) {
     result.forEach(anime => {
       const card = createMediaCard(anime);
       sectWrapper.insertAdjacentHTML('beforeend', card);
+    });
+
+    sectWrapper.childNodes.forEach(child => {
+      if (child.nodeName !== 'DIV') sectWrapper.removeChild(child);
     });
 
     let timeoutId = null;
@@ -70,7 +72,7 @@ const createFeaturedSect = function (sectName, sectTitle, cb) {
         clearTimeout(timeoutId);
         hidedets_basic.call(card);
       });
-      // cancel function if mouse leaves card before 0.5s
+      // cancel function if mouse leaves card before 0.6s
     });
   });
 };

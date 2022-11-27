@@ -75,74 +75,74 @@ function displayCountdown(media) {
 
 export const createMediaCard = function (media) {
   const genres = media.genres.slice(0, 3);
-  const mediaCard = `<div class="media-card relative max-w-[144px] md:max-w-[185px] h-fit rounded-md" data-video_id =${
+  const mediaCard = `<div class="media-card relative rounded-md" data-video_id =${
     media.trailer?.id
   } data-media_id=${media.id}>
-      <div class="cover z-50 cursor-pointer w-full rounded-md relative overflow-hidden inline-block"
-        ><img
-        class="w-full h-[202.54px] md:h-[265px] relative object-cover" src="${
-          media.coverImage.extraLarge
-        }" alt=""/>
+        <div class="cover z-50 cursor-pointer w-full h-[214.86px] rounded-md relative overflow-hidden inline-block"
+          ><img
+          class="w-full h-full absolute left-0 top-0 object-cover" src="${
+            media.coverImage.extraLarge
+          }" alt=""/>
+        </div>
+        <div href="" class="title text-[0.8rem] md:text-[0.9rem] pt-1 inline-block w-[140px] md:w-[180px] overflow-hidden text-ellipsis">${
+          media.title?.english || media.title?.romaji || media.title?.native
+        }</div>
+        <div class="details-overlay overflow-hidden rounded-md bg-[var(--overlay-grey)] opacity-0 absolute w-full left-0 top-[50px]">
+        <div class="trailer-container relative w-full overflow-hidden pt-[56.25%]">
+          <img src="http://i.ytimg.com/vi/${
+            media.trailer?.id
+          }/maxresdefault.jpg" class="hq-thumbnail absolute top-0 bottom-0 right-0 left-0 w-full h-full rounded-t-md z-50" alt="high quality thumbnail">
+          <iframe
+          class="trailer absolute top-0 left-0 right-0 bottom-0 w-full h-full rounded-t-md"
+          src=""
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+        </div>
+        <div class="basic-dets w-full relative p-[6px]">
+        <div class="avg-score absolute right-2 top-[5px] text-[0.475rem]">
+          <i class="fa-regular ${determineIcon(media.averageScore)}"></i>
+          <span class="score-value text-[var(--main-text)]">${
+            media.averageScore !== null ? media.averageScore + '%' : 'N/A'
+          }</span>
+        </div>
+        <div class="basic-dets-episodes font-medium text-[0.45rem] text-[var(--main-brand)]">
+          ${determineEps(media)}
+        </div>
+        <div
+          class="basic-dets-countdown text-[0.45rem] pb-[1px] text-[var(--heading-grey)] font-medium"
+        >
+          ${displayCountdown(media)}
+        </div>
+        <div
+          class="basic-dets-source text-[0.4rem] font-medium text-[var(--main-text)] mb-1"
+        >
+          Source • ${formatSource(media.source)}
+        </div>
+        <p
+          class="basic-dets-synopsis text-[var(--main-text)] text-[0.4rem] font-medium mb-6"
+        >
+         ${media.description}
+        </p>
+        <div
+          class="genres flex justify-center items-center gap-1 pl-1 absolute bottom-2 left-0"
+        >
+        ${genres.map(genre => createGenreTag(genre)).join('')}
+        </div>
+        <button title="Add to List" class="add-basic flex justify-center items-center
+        border-[var(--main-text)] border-solid border-[1px] rounded-[50%] h-4 w-4 absolute bottom-2 right-7"> 
+          <i class="fa-solid fa-plus text-[var(--main-text)] text-[8px]"></i> 
+        </button>
+        <button title="View Info & Episodes" class="view-info flex justify-center items-center more-dets 
+        border-[var(--main-text)] border-solid border-[1px] rounded-[50%] h-4 w-4 absolute bottom-2 right-2"> 
+          <i class="fa-solid fa-chevron-down text-[var(--main-text)] text-[8px]"></i> 
+        </button>
       </div>
-      <div href="" class="title text-[0.8rem] md:text-[0.9rem] pt-1 inline-block w-[140px] md:w-[180px] overflow-hidden text-ellipsis">${
-        media.title?.english || media.title?.romaji || media.title?.native
-      }</div>
-      <div class="details-overlay overflow-hidden rounded-md bg-[var(--overlay-grey)] opacity-0 absolute w-full left-0 top-[50px]">
-      <div class="trailer-container relative w-full overflow-hidden pt-[56.25%]">
-        <img src="http://i.ytimg.com/vi/${
-          media.trailer?.id
-        }/maxresdefault.jpg" class="hq-thumbnail absolute top-0 bottom-0 right-0 left-0 w-full h-full rounded-t-md z-50" alt="high quality thumbnail">
-        <iframe
-        class="trailer absolute top-0 left-0 right-0 bottom-0 w-full h-full rounded-t-md"
-        src=""
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-      ></iframe>
       </div>
-      <div class="basic-dets w-full relative p-[6px]">
-      <div class="avg-score absolute right-2 top-[5px] text-[0.475rem]">
-        <i class="fa-regular ${determineIcon(media.averageScore)}"></i>
-        <span class="score-value text-[var(--main-text)]">${
-          media.averageScore !== null ? media.averageScore + '%' : 'NA'
-        }</span>
       </div>
-      <div class="basic-dets-episodes font-medium text-[0.45rem] text-[var(--main-brand)]">
-        ${determineEps(media)}
-      </div>
-      <div
-        class="basic-dets-countdown text-[0.45rem] pb-[1px] text-[var(--heading-grey)] font-medium"
-      >
-        ${displayCountdown(media)}
-      </div>
-      <div
-        class="basic-dets-source text-[0.4rem] font-medium text-[var(--main-text)] mb-1"
-      >
-        Source • ${formatSource(media.source)}
-      </div>
-      <p
-        class="basic-dets-synopsis text-[var(--main-text)] text-[0.4rem] font-medium mb-6"
-      >
-       ${media.description}
-      </p>
-      <div
-        class="genres flex justify-center items-center gap-1 pl-1 absolute bottom-2 left-0"
-      >
-      ${genres.map(genre => createGenreTag(genre)).join('')}
-      </div>
-      <button title="view info & episodes" class="add-basic flex justify-center items-center
-      border-[var(--main-text)] border-solid border-[1px] rounded-[50%] h-4 w-4 absolute bottom-2 right-7"> 
-        <i class="fa-solid fa-plus text-[var(--main-text)] text-[8px]"></i> 
-      </button>
-      <button title="view info & episodes" class="view-info flex justify-center items-center more-dets 
-      border-[var(--main-text)] border-solid border-[1px] rounded-[50%] h-4 w-4 absolute bottom-2 right-2"> 
-        <i class="fa-solid fa-chevron-down text-[var(--main-text)] text-[8px]"></i> 
-      </button>
-    </div>
-    </div>
-    </div>
-      `;
+        `;
 
   return mediaCard;
 };
@@ -189,7 +189,7 @@ export function showdets_basic() {
     this.querySelector('.details-overlay').style.translate = transDir(this);
   if (trailer.src === window.location.href) {
     setTimeout(() => {
-      trailer.src = `https://www.youtube-nocookie.com/embed/${this.dataset.video_id}?controls=0&rel=0`;
+      trailer.src = `https://www.youtube-nocookie.com/embed/${this.dataset.video_id}?controls=1&rel=0`;
     }, 200);
   }
 }

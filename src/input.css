@@ -102,11 +102,40 @@ nav {
 }
 
 .media-wrapper {
-  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  overflow-x: auto;
   display: grid;
   grid-gap: 25px 20px;
-  grid-template-columns: repeat(auto-fill, minmax(144px, 1fr));
-  justify-content: space-between;
+  grid-template-columns: repeat(2, 150px);
+}
+
+@media (min-width: 370px) {
+  .media-wrapper {
+    overflow: hidden;
+    justify-content: space-evenly;
+  }
+}
+
+@media (min-width: 461px) {
+  .media-wrapper {
+    grid-gap: 20px 12px;
+    grid-template-columns: repeat(auto-fill, 135px);
+    justify-content: space-between;
+  }
+
+  .cover {
+    height: 193.38px;
+  }
+}
+
+@media (min-width: 770px) {
+  .media-wrapper {
+    grid-template-columns: repeat(auto-fill, 185px);
+    justify-content: space-between;
+  }
+
+  .cover {
+    height: 265px;
+  }
 }
 
 .basic-dets-synopsis {
@@ -121,13 +150,6 @@ nav {
 .swiper-button-prev::after,
 .swiper-button-next::after {
   color: var(--main-brand);
-}
-
-@media screen and (min-width: 1024px) {
-  .media-wrapper {
-    grid-template-columns: repeat(auto-fill, 185px);
-    grid-gap: 28px 30px;
-  }
 }
 
 .view-info,
@@ -153,10 +175,6 @@ nav {
   transform-origin: left center;
 }
 
-.hero-title {
-  max-width: 70%;
-}
-
 .hero-synop {
   display: -webkit-box;
   display: -moz-box;
@@ -164,7 +182,6 @@ nav {
   line-clamp: 5;
   -webkit-box-orient: vertical;
   overflow-y: hidden;
-  max-width: 30%;
 }
 
 .hero.add,

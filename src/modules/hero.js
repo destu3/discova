@@ -18,7 +18,7 @@ export async function alternateHeroImgs() {
   // const cid =
   //   'e252f66035077a6486bccd69d2b650f55bf004f99d1e5c185afeaa559697e920';
   // const popular = await getMedia(QUERIES_AND_VARIABLES.allTimePopular.query, {
-  //   page: 10,
+  //   page: 11,
   //   perPage: 20,
   // });
   // const ids = popular.map(anime => anime.idMal);
@@ -44,9 +44,11 @@ export async function alternateHeroImgs() {
   // );
 
   // const heroContent = responses_ex.map(ex => {
+  //   console.log(ex);
   //   return {
-  //     title: ex.title_en || ex.title,
-  //     heroImg: buildHeroImageUrl(ex.fanart),
+  //     title: ex.en_title || ex.title,
+  //     heroImg: buildHeroImage(ex.fanart),
+  //     heroImgSm: buildHeroImageMob(ex.poster),
   //     overview: ex.overview,
   //     idMal: ex.ids.mal,
   //   };
@@ -57,11 +59,14 @@ export async function alternateHeroImgs() {
 
 function setHero(heroData) {
   let swiper = new Swiper('.mySwiper', {
-    spaceBetween: 30,
-    speed: 800,
+    speed: 1500,
     spaceBetween: 0,
     slidesPerView: 1,
     simulateTouch: false,
+    keyboard: {
+      enabled: true,
+      onlyInViewport: false,
+    },
     autoplay: {
       delay: 10000,
       disableOnInteraction: false,
@@ -81,10 +86,9 @@ function setHero(heroData) {
     const rand = arr[Math.floor(Math.random() * arr.length)];
     const html = `
     <div class="swiper-slide h-full w-full hero-img relative" style="background-image:linear-gradient(rgba(0, 0, 0, 0.6),rgba(0, 0, 0, 0.6)), url(${rand.heroImg})">
-      <div class="hero-info absolute bottom-0 top-0 my-auto mx-0 left-20 h-[300px]">
-          <h1 class="hero-title text-5xl max-w-[75%] font-bold text-white pb-4">${rand.title}</h1>
-          <div class="hero-synop text-xl font-medium text-white">${rand.overview}</div>
-          <div class="flex gap-4 mt-5">
+      <div class="hero-info w-[80%] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+          <h1 class="hero-title text-4xl md:text-5xl font-bold text-white">${rand.title}</h1>
+          <div class="flex flex-col sm:flex-row gap-4 mt-5">
             <button class="hero add font-roboto font-medium"><i class="fa-solid fa-plus mr-2"></i>Add to List</button>
             <button class="hero more-info font-medium"><i class="fa-solid fa-circle-info mr-2"></i>More Info</button>
           </div>
@@ -95,6 +99,10 @@ function setHero(heroData) {
   });
 }
 
-function buildHeroImageUrl(path) {
+function buildHeroImage(path) {
   return `https://simkl.in/fanart/${path}_medium.jpg`;
+}
+
+function buildHeroImageMob(path) {
+  return `https://simkl.in/posters/${path}_m.jpg`;
 }
