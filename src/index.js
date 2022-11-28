@@ -5,7 +5,7 @@ import {
   createPopular,
   createUpcoming,
 } from './modules/featured_sect';
-import { alternateHeroImgs } from './modules/hero';
+import { alternatePopular } from './modules/hero';
 
 // Dom selection
 const srchBtn = document.querySelector('.search-btn');
@@ -14,7 +14,7 @@ const hideSrchBarBtn = document.querySelector('.hide-search-bar');
 
 // event listners
 document.addEventListener('DOMContentLoaded', () => {
-  alternateHeroImgs();
+  alternatePopular();
   createTrending();
   createPopularRn();
   createUpcoming();

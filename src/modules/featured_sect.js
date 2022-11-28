@@ -62,17 +62,27 @@ const createFeaturedSect = function (sectName, sectTitle, cb) {
     let timeoutId = null;
     const mediaCards = document.querySelectorAll(`.${sectName} .media-card`);
     mediaCards.forEach(card => {
-      card.addEventListener('mouseenter', function () {
-        timeoutId = setTimeout(function () {
-          showdets_basic.call(card);
-        }, 600);
+      if (!window.matchMedia('(pointer: coarse)').matches) {
+        // touchscreen
+        card.addEventListener('mouseenter', function (e) {
+          timeoutId = setTimeout(function () {
+            showdets_basic.call(card);
+          }, 600);
+        });
+      }
+
+      card.addEventListener('click', function (e) {
+        console.log(this);
       });
 
-      card.addEventListener('mouseleave', function () {
-        clearTimeout(timeoutId);
-        hidedets_basic.call(card);
-      });
-      // cancel function if mouse leaves card before 0.6s
+      if (!window.matchMedia('(pointer: coarse)').matches) {
+        // touchscreen
+        // cancel function if mouse leaves card before 0.6s
+        card.addEventListener('mouseleave', function () {
+          clearTimeout(timeoutId);
+          hidedets_basic.call(card);
+        });
+      }
     });
   });
 };

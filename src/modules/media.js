@@ -59,8 +59,8 @@ function formatSource(source) {
   }
 }
 
-function createGenreTag(genre) {
-  return `<div class="genre text-center rounded-[10px] font-medium text-[0.4rem] pl-[2px] text-[var(--main-brand)]">${genre}</div>`;
+export function createGenreTag(genre, size, textColour) {
+  return `<div class="genre font-medium ${size} pl-[2px] ${textColour}">${genre}</div>`;
 }
 
 function displayCountdown(media) {
@@ -74,7 +74,7 @@ function displayCountdown(media) {
 }
 
 export const createMediaCard = function (media) {
-  const genres = media.genres.slice(0, 3);
+  const genres = media.genres.slice(0, 2);
   const mediaCard = `<div class="media-card relative rounded-md" data-video_id =${
     media.trailer?.id
   } data-media_id=${media.id}>
@@ -89,9 +89,11 @@ export const createMediaCard = function (media) {
         }</div>
         <div class="details-overlay overflow-hidden rounded-md bg-[var(--overlay-grey)] opacity-0 absolute w-full left-0 top-[50px]">
         <div class="trailer-container relative w-full overflow-hidden pt-[56.25%]">
-          <img src="http://i.ytimg.com/vi/${
-            media.trailer?.id
-          }/maxresdefault.jpg" class="hq-thumbnail absolute top-0 bottom-0 right-0 left-0 w-full h-full rounded-t-md z-50" alt="high quality thumbnail">
+          <img src="${
+            media.trailer
+              ? `http://i.ytimg.com/vi/${media.trailer.id}/maxresdefault.jpg`
+              : media.bannerImage
+          }" class="hq-thumbnail absolute top-0 bottom-0 right-0 left-0 w-full h-full rounded-t-md z-50 object-cover object-center" alt="high quality thumbnail">
           <iframe
           class="trailer absolute top-0 left-0 right-0 bottom-0 w-full h-full rounded-t-md"
           src=""
@@ -127,9 +129,13 @@ export const createMediaCard = function (media) {
          ${media.description}
         </p>
         <div
-          class="genres flex justify-center items-center gap-1 pl-1 absolute bottom-2 left-0"
+          class="genres flex justify-center items-center gap-1 pl-1 absolute bottom-[10px] left-0"
         >
-        ${genres.map(genre => createGenreTag(genre)).join('')}
+        ${genres
+          .map(genre =>
+            createGenreTag(genre, 'text-[0.4rem]', 'text-[var(--main-brand)]')
+          )
+          .join('')}
         </div>
         <button title="Add to List" class="add-basic flex justify-center items-center
         border-[var(--main-text)] border-solid border-[1px] rounded-[50%] h-4 w-4 absolute bottom-2 right-7"> 
@@ -176,11 +182,13 @@ function setThumbnail() {
 export function showdets_basic() {
   const trailer = this.querySelector('iframe.trailer');
   const thumbnail = this.querySelector('.hq-thumbnail');
-  thumbnail.addEventListener('mouseover', hideThumbnail);
+  if (this.dataset.video_id !== 'undefined') {
+    thumbnail.addEventListener('mouseover', hideThumbnail);
+  }
   this.style.zIndex = 999;
   this.querySelector('.details-overlay').style.transform = 'scale(2.5)';
   setTimeout(() => {
-    this.querySelector('.cover').style.transform = 'scale(0)';
+    this.querySelector('.cover').style.pointerEvents = 'none';
   }, 300);
   this.querySelector('.cover').style.opacity = 0;
   this.querySelector('.title').style.opacity = '0';
@@ -200,7 +208,7 @@ export function hidedets_basic() {
   const thumbnail = this.querySelector('.hq-thumbnail');
   this.querySelector('.details-overlay').style.opacity = 0;
   setThumbnail.call(thumbnail);
-  this.querySelector('.cover').style.transform = 'scale(1)';
+  this.querySelector('.cover').style.pointerEvents = 'auto';
   trailer.src = ``;
   this.querySelector('.details-overlay').style.transform = 'scale(1)';
   this.querySelector('.details-overlay').style.translate = '0';
