@@ -34,23 +34,16 @@
           </ul>
         </div>
         <div class="r-handside hidden md:block">
-          <div
-            class="search-bar inline-block h-9 pl-2 pr-3 relative left-6 z-10 _hidden transition-all duration-300 bg-transparent rounded-2xl"
-          >
-            <i class="fa-solid relative text-sm pt-1.5 pr-2 inline-block"></i>
+          <div class="search-box">
+            <button class="btn-search font-roboto">
+              <i class="fa-solid fa-search"></i>
+            </button>
             <input
-              placeholder="Search anime, manga..."
               type="text"
-              class="search-param text-sm bg-transparent pt-1.5"
+              class="search-param input-search"
+              placeholder="Search Discova..."
             />
-            <i
-              class="fa-solid fa-xmark text-lg pl-1 relative inline-block cursor-pointer hide-search-bar"
-            ></i>
           </div>
-
-          <button class="search-btn relative top-0.5">
-            <i class="fa-solid fa-magnifying-glass text-xl"></i>
-          </button>
         </div>
       </div>
     </nav>
@@ -61,21 +54,16 @@
       <div class="swiper-button-next"></div>
     </section>
 
-    <main class="container top-20 relative pt-7 pb-28 mx-auto px-4">
-      <div
-        class="search-bar mobile-search-bar inline-block md:hidden h-9 pl-2 pr-3 w-full relative mb-3 bg-transparent rounded-2xl"
-      >
-        <i
-          class="fa-solid fa-magnifying-glass relative text-sm pt-1.5 pr-2 inline-block"
-        ></i>
-        <input
-          placeholder="Search anime, manga..."
-          type="text"
-          class="search-param text-sm bg-transparent pt-1.5"
-        />
-        <i
-          class="fa-solid fa-xmark text-lg absolute right-3 inline-block pt-1 cursor-pointer hide-search-bar"
-        ></i>
+    <main class="container top-20 relative pt-10 pb-28 mx-auto px-4">
+      <div class="mobile search__container w-full md:hidden pb-6">
+        <div class="w-full h-full flex justify-center items-center">
+          <input
+            class="search__input pr-1 search-param w-[90%]"
+            type="text"
+            placeholder="Search Discova..."
+          />
+          <i class="fa-solid fa-magnifying-glass inline-block"></i>
+        </div>
       </div>
     </main>
 

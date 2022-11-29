@@ -1,15 +1,27 @@
 // creates card component for an anime
 function determineEps(media) {
-  if (media.status === 'FINISHED') {
+  if (media.format === 'MOVIE') {
+    return `Movie premiered on`;
+  } else if (
+    (media.status === 'FINISHED' && media.endDate.day === null) ||
+    media.endDate.month === null
+  ) {
+    return `Episode ${media.episodes} aired in`;
+  } else if (media.status === 'FINISHED') {
     return `Episode ${media.episodes} aired on`;
   } else if (media?.nextAiringEpisode && media?.episodes) {
     return `Episode ${media.nextAiringEpisode.episode} of ${media.episodes} airing in  `;
   } else if (media?.nextAiringEpisode) {
     return `Episode ${media.nextAiringEpisode.episode} airing in  `;
+  } else if (media.status === 'NOT_YET_RELEASED' && media.seasonYear === null) {
+    return 'Airing Soon';
   } else if (media.status === 'NOT_YET_RELEASED') {
-    return `Airing in ${
-      media.season.charAt(0).toUpperCase() + media.season.slice(1).toLowerCase()
-    } ${media.seasonYear}`;
+    return media.season
+      ? `Airing in ${
+          media.season.charAt(0).toUpperCase() +
+          media.season.slice(1).toLowerCase()
+        } ${media.seasonYear}`
+      : `Airing in ${media.seasonYear}`;
   }
 }
 
@@ -45,6 +57,9 @@ function makeHumanReadable(num, singular) {
 }
 
 function formatSource(source) {
+  if (source === null) {
+    return 'Unknown';
+  }
   if (source.includes('_')) {
     const formatted = source
       .replace('_', ' ')
@@ -64,12 +79,19 @@ export function createGenreTag(genre, size, textColour) {
 }
 
 function displayCountdown(media) {
-  if (media.status === 'NOT_YET_RELEASED') {
+  if (media.seasonYear === null && media.status === 'NOT_YET_RELEASED') {
+    return 'Coming Soon';
+  } else if (media.status === 'RELEASING') {
+    return toDaysMinutesSeconds(media.nextAiringEpisode?.timeUntilAiring);
+  } else if (media.status === 'NOT_YET_RELEASED') {
     return media.seasonYear;
+  } else if (
+    (media.status === 'FINISHED' && media.endDate.day === null) ||
+    media.endDate.month === null
+  ) {
+    return media.endDate.year;
   } else if (media.status === 'FINISHED') {
     return `${media.endDate.day}/${media.endDate.month}/${media.endDate.year}`;
-  } else if (media.status === 'RELEASING') {
-    return toDaysMinutesSeconds(media.nextAiringEpisode.timeUntilAiring);
   }
 }
 
@@ -90,9 +112,9 @@ export const createMediaCard = function (media) {
         <div class="details-overlay overflow-hidden rounded-md bg-[var(--overlay-grey)] opacity-0 absolute w-full left-0 top-[50px]">
         <div class="trailer-container relative w-full overflow-hidden pt-[56.25%]">
           <img src="${
-            media.trailer
-              ? `http://i.ytimg.com/vi/${media.trailer.id}/maxresdefault.jpg`
-              : media.bannerImage
+            media.trailer === null
+              ? media.bannerImage || media.coverImage.extraLarge
+              : `http://i.ytimg.com/vi/${media.trailer.id}/hqdefault.jpg`
           }" class="hq-thumbnail absolute top-0 bottom-0 right-0 left-0 w-full h-full rounded-t-md z-50 object-cover object-center" alt="high quality thumbnail">
           <iframe
           class="trailer absolute top-0 left-0 right-0 bottom-0 w-full h-full rounded-t-md"
@@ -121,7 +143,7 @@ export const createMediaCard = function (media) {
         <div
           class="basic-dets-source text-[0.4rem] font-medium text-[var(--main-text)] mb-1"
         >
-          Source • ${formatSource(media.source)}
+          Source • ${formatSource(media?.source)}
         </div>
         <p
           class="basic-dets-synopsis text-[var(--main-text)] text-[0.4rem] font-medium mb-6"

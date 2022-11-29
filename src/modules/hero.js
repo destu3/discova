@@ -10,8 +10,9 @@ import { createGenreTag } from './media';
 const swiper = document.querySelector('.swiper').swiper;
 
 export async function alternatePopular() {
+  const rand = Math.floor(Math.random() * 10) + 1;
   const popular = await getMedia(QUERIES_AND_VARIABLES.allTimePopular.query, {
-    page: 1,
+    page: rand,
     perPage: 20,
   });
 
@@ -21,11 +22,15 @@ export async function alternatePopular() {
 function setHero(heroData) {
   let swiper = new Swiper('.mySwiper', {
     slidesPerView: 1,
-    speed: 500,
+    speed: 1000,
+    rewind: true,
     autoplay: {
       delay: 10000,
       disableOnInteraction: false,
-      loop: true,
+    },
+    keyboard: {
+      enabled: true,
+      onlyInViewport: false,
     },
     observer: true,
     pagination: {
@@ -47,7 +52,7 @@ function setHero(heroData) {
     const html = `
     <div class="swiper-slide h-full w-full">
     <div
-      class="background absolute top-0 right-0 left-0 bottom-0 blur-md hero-img bg-center ${
+      class="background absolute top-0 right-0 left-0 bottom-0 blur hero-img bg-center ${
         hero.bannerImage ? 'bg-cover' : 'bg-[length:400px_100%]'
       } bg-repeat"
       style="

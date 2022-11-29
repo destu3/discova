@@ -179,3 +179,44 @@ export async function getMedia(query, variables) {
   let data = await response.json();
   return data.data.Page.media;
 }
+
+export async function getSrchRslts(searchQuery, pageNum) {
+  const query = `
+  query ($page: Int, $perPage: Int, $search: String) {
+    Page(page: $page, perPage: $perPage) {
+      pageInfo {
+        total
+        perPage
+      }
+      media(search: $search, type: ANIME, sort: POPULARITY_DESC) {
+        ${DEFAULT_FIELDS}
+      }
+    }
+  }
+  
+`;
+
+  let variables = {
+    search: searchQuery,
+    page: pageNum,
+    perPage: 20,
+  };
+
+  // Define the config we'll need for our Api request
+  let url = 'https://graphql.anilist.co',
+    options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({
+        query: query,
+        variables: variables,
+      }),
+    };
+
+  let res = await fetch(url, options);
+  let data = await res.json();
+  return data.data.Page.media;
+}
