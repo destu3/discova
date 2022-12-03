@@ -17,9 +17,11 @@ document.addEventListener('DOMContentLoaded', () => {
   createFeaturedSects();
 });
 
+let currSearch = null;
 searchBar.forEach(searchBar => {
   searchBar.addEventListener('input', function (e) {
     renderResults(this.value);
+    currSearch = this.value;
   });
 });
 
@@ -35,9 +37,8 @@ window.onbeforeunload = function () {
   window.scrollTo(0, 0);
 };
 
-const searchBar_ = document.querySelector('.search-param');
 window.addEventListener('scroll', () => {
-  handleInfiniteScroll(searchBar_.value);
+  handleInfiniteScroll(currSearch);
 });
 
 function createFeaturedSects() {

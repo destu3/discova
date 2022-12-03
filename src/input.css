@@ -259,3 +259,10 @@ nav {
     line-clamp: 5;
   }
 }
+
+.loading {
+  background: #dfdfdf;
+  min-height: 30px;
+  position: relative;
+  overflow: hidden;
+}

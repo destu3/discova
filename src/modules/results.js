@@ -14,7 +14,7 @@ function createRsltsSection(searchValue) {
 
   const resultsSection = `
   <section class="results results-container w-full relative bottom-6 mt-10 sm:px-0">
-    <div class="results-header pb-[20px] flex justify-between items-center">
+    <div class="results-header pb-[30px] flex justify-center sm:justify-between items-center">
       <h2 class="search-value !text-[var(--main-brand)]">${searchValue}</h2>
     </div>
     <div class="media-wrapper results"></div>
@@ -43,6 +43,10 @@ export async function renderResults(searchTerm) {
   removeAllChildNodes(rsltsWrapper);
   results.forEach(result => {
     rsltsWrapper.insertAdjacentHTML('beforeend', createMediaCard(result));
+  });
+
+  rsltsWrapper.childNodes.forEach(child => {
+    if (child.nodeName !== 'DIV') rsltsWrapper.removeChild(child);
   });
 
   let timeoutId = null;

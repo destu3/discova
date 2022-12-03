@@ -1,28 +1,6 @@
 // creates card component for an anime
 function determineEps(media) {
-  if (media.format === 'MOVIE') {
-    return `Movie premiered on`;
-  } else if (
-    (media.status === 'FINISHED' && media.endDate.day === null) ||
-    media.endDate.month === null
-  ) {
-    return `Episode ${media.episodes} aired in`;
-  } else if (media.status === 'FINISHED') {
-    return `Episode ${media.episodes} aired on`;
-  } else if (media?.nextAiringEpisode && media?.episodes) {
-    return `Episode ${media.nextAiringEpisode.episode} of ${media.episodes} airing in  `;
-  } else if (media?.nextAiringEpisode) {
-    return `Episode ${media.nextAiringEpisode.episode} airing in  `;
-  } else if (media.status === 'NOT_YET_RELEASED' && media.seasonYear === null) {
-    return 'Airing Soon';
-  } else if (media.status === 'NOT_YET_RELEASED') {
-    return media.season
-      ? `Airing in ${
-          media.season.charAt(0).toUpperCase() +
-          media.season.slice(1).toLowerCase()
-        } ${media.seasonYear}`
-      : `Airing in ${media.seasonYear}`;
-  }
+  return media.status;
 }
 
 function determineIcon(rating) {
@@ -102,7 +80,7 @@ export const createMediaCard = function (media) {
   } data-media_id=${media.id}>
         <div class="cover z-50 cursor-pointer w-full h-[214.86px] rounded-md relative overflow-hidden inline-block"
           ><img
-          class="w-full h-full absolute left-0 top-0 object-cover" src="${
+          class="w-full h-full loading absolute left-0 top-0 object-cover" src="${
             media.coverImage.extraLarge
           }" alt=""/>
         </div>
@@ -178,9 +156,9 @@ export const createMediaCard = function (media) {
 function isNearEdge(el) {
   const rect = el.getBoundingClientRect();
   return (
-    rect.left < 110 ||
+    rect.left < 150 ||
     rect.right >
-      (window.innerWidth - 110 || document.documentElement.clientWidth - 110)
+      (window.innerWidth - 150 || document.documentElement.clientWidth - 150)
   );
 }
 
