@@ -884,6 +884,10 @@ video {
   padding-left: 0.25rem;
 }
 
+.pb-\[30px\]{
+  padding-bottom: 30px;
+}
+
 .font-roboto{
   font-family: Roboto, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji;
 }
@@ -1270,7 +1274,26 @@ nav {
   }
 }
 
+.loading {
+  background: #dfdfdf;
+  min-height: 30px;
+  position: relative;
+  overflow: hidden;
+}
+
 @media (min-width: 640px){
+  .sm\:flex{
+    display: flex;
+  }
+
+  .sm\:grid{
+    display: grid;
+  }
+
+  .sm\:justify-between{
+    justify-content: space-between;
+  }
+
   .sm\:px-0{
     padding-left: 0px;
     padding-right: 0px;
