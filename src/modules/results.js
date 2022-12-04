@@ -1,7 +1,7 @@
 // contains functionality related to search results
 import { getSrchRslts } from './gql';
 import { createMediaCard } from './media';
-import { hidedets_basic, showdets_basic } from './media';
+import { hidedets_basic, showdets_basic, showInfo } from './media';
 
 function createRsltsSection(searchValue) {
   const mainSection = document.querySelector('main');
@@ -14,32 +14,43 @@ function createRsltsSection(searchValue) {
 
   const resultsSection = `
   <section class="results results-container w-full relative bottom-6 mt-10 sm:px-0">
-    <div class="results-header pb-[30px] flex justify-center sm:justify-between items-center">
+    <div class="results-header pb-[30px] flex justify-between items-center">
       <h2 class="search-value !text-[var(--main-brand)]">${searchValue}</h2>
     </div>
-    <div class="media-wrapper results"></div>
+    <div class="media-wrapper min-h-[100px] results relative">
+    <div class="lds-ellipsis absolute m-auto right-0 left-0 top-0 bottom-0">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    </div>
   </section>
   `;
 
-  if (!document.body.contains(document.querySelector(`.media-wrapper.results`)))
-    mainSection.insertAdjacentHTML('beforeend', resultsSection);
+  if (document.body.contains(document.querySelector('.results-container')))
+    mainSection.removeChild(document.querySelector('.results-container'));
+
+  mainSection.insertAdjacentHTML('beforeend', resultsSection);
 
   const wrapper = document.querySelector(`.media-wrapper.results`);
   return wrapper;
 }
 
 function removeAllChildNodes(parent) {
-  while (parent.firstChild) {
-    parent.removeChild(parent.firstChild);
+  const elements = parent.getElementsByClassName('media-card');
+
+  while (elements[0]) {
+    elements[0].parentNode.removeChild(elements[0]);
   }
 }
 
 let currentPage = 1;
 export async function renderResults(searchTerm) {
-  currentPage = 1;
-  const rsltsWrapper = createRsltsSection(`${searchTerm}`);
+  const rsltsWrapper = createRsltsSection(searchTerm);
   rsltsWrapper.parentElement.querySelector('h2').textContent = searchTerm;
   const results = await getSrchRslts(searchTerm, 1);
+  rsltsWrapper.querySelector('.lds-ellipsis').style.display = 'none';
   removeAllChildNodes(rsltsWrapper);
   results.forEach(result => {
     rsltsWrapper.insertAdjacentHTML('beforeend', createMediaCard(result));
@@ -52,6 +63,7 @@ export async function renderResults(searchTerm) {
   let timeoutId = null;
   const mediaCards = document.querySelectorAll(`.results .media-card`);
   mediaCards.forEach(card => {
+    const moreDets = card.querySelector('.more-dets');
     if (!window.matchMedia('(pointer: coarse)').matches) {
       // touchscreen
       card.addEventListener('mouseenter', function (e) {
@@ -61,8 +73,14 @@ export async function renderResults(searchTerm) {
       });
     }
 
-    card.addEventListener('click', function (e) {
-      console.log(this);
+    moreDets.addEventListener('click', function () {
+      showInfo.call(card);
+      hidedets_basic.call(card);
+    });
+
+    card.addEventListener('click', function () {
+      showInfo.call(card);
+      hidedets_basic.call(card);
     });
 
     if (!window.matchMedia('(pointer: coarse)').matches) {

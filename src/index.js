@@ -1,10 +1,10 @@
-import { showSrchBar, hideSrchBar } from './modules/nav';
 import {
   createTrending,
   createPopularRn,
   createPopular,
   createUpcoming,
 } from './modules/featured_sect';
+import { changeNavColour } from './modules/nav';
 import { alternatePopular } from './modules/hero';
 import { renderResults, handleInfiniteScroll } from './modules/results';
 
@@ -39,6 +39,7 @@ window.onbeforeunload = function () {
 
 window.addEventListener('scroll', () => {
   handleInfiniteScroll(currSearch);
+  changeNavColour();
 });
 
 function createFeaturedSects() {

@@ -1,4 +1,5 @@
-// creates card component for an anime
+import { getAnimeInfo } from './gql';
+
 function determineEps(media) {
   return media.status;
 }
@@ -78,9 +79,9 @@ export const createMediaCard = function (media) {
   const mediaCard = `<div class="media-card relative rounded-md" data-video_id =${
     media.trailer?.id
   } data-media_id=${media.id}>
-        <div class="cover z-50 cursor-pointer w-full h-[214.86px] rounded-md relative overflow-hidden inline-block"
+        <div class="cover z-20 cursor-pointer w-full h-[229.19px] rounded-md relative overflow-hidden inline-block"
           ><img
-          class="w-full h-full loading absolute left-0 top-0 object-cover" src="${
+          class="w-full h-full absolute left-0 top-0 object-cover poster" src="${
             media.coverImage.extraLarge
           }" alt=""/>
         </div>
@@ -93,7 +94,7 @@ export const createMediaCard = function (media) {
             media.trailer === null
               ? media.bannerImage || media.coverImage.extraLarge
               : `http://i.ytimg.com/vi/${media.trailer.id}/hqdefault.jpg`
-          }" class="hq-thumbnail absolute top-0 bottom-0 right-0 left-0 w-full h-full rounded-t-md z-50 object-cover object-center" alt="high quality thumbnail">
+          }" class="hq-thumbnail absolute top-0 bottom-0 right-0 left-0 w-full h-full rounded-t-md z-20 object-cover object-center" alt="high quality thumbnail">
           <iframe
           class="trailer absolute top-0 left-0 right-0 bottom-0 w-full h-full rounded-t-md"
           src=""
@@ -204,6 +205,7 @@ export function showdets_basic() {
 
 // function negates the effect of showdetails_basic()
 export function hidedets_basic() {
+  this.style.zIndex = 1;
   const trailer = this.querySelector('iframe.trailer');
   const thumbnail = this.querySelector('.hq-thumbnail');
   this.querySelector('.details-overlay').style.opacity = 0;
@@ -214,7 +216,45 @@ export function hidedets_basic() {
   this.querySelector('.details-overlay').style.translate = '0';
   setTimeout(() => {
     this.querySelector('.cover').style.opacity = 1;
-    this.style.zIndex = 1;
     this.querySelector('.title').style.opacity = '1';
   }, 200);
+}
+
+export function showInfo() {
+  const overlay = document.querySelector('.info-overlay');
+  const infoModal = overlay.querySelector('.info-modal');
+  const trailer = overlay.querySelector('.trailer');
+  const ring = overlay.querySelector('.lds-ring');
+
+  document.querySelector('body').classList.add('no-scroll');
+  infoModal.classList.add('scaled-def');
+  overlay.classList.remove('pointer-events-none');
+  overlay.classList.remove('opacity-0');
+  overlay.addEventListener('click', e => {
+    if (e.target !== infoModal) hideInfo();
+  });
+
+  getAnimeInfo(this.dataset.media_id).then(animeInfo => {
+    trailer.src = `https://www.youtube.com/embed/${animeInfo.trailer.id}`;
+    console.log(animeInfo);
+    ring.style.display = 'none';
+  });
+}
+
+export function hideInfo() {
+  const overlay = document.querySelector('.info-overlay');
+  const infoModal = overlay.querySelector('.info-modal');
+  const ring = overlay.querySelector('.lds-ring');
+  const trailer = overlay.querySelector('.trailer');
+
+  trailer.src = '';
+  document.querySelector('body').classList.remove('no-scroll');
+  overlay.classList.add('pointer-events-none');
+  overlay.scrollTo(0, 0);
+  infoModal.classList.remove('scaled-def');
+  overlay.classList.add('opacity-0');
+
+  setTimeout(() => {
+    ring.style.display = 'inline-block';
+  }, 150);
 }

@@ -220,3 +220,36 @@ export async function getSrchRslts(searchQuery, pageNum) {
   let data = await res.json();
   return data.data.Page.media;
 }
+
+export async function getAnimeInfo(ID) {
+  const query = `
+  query ($id: Int) {
+      Media(type: ANIME, id: $id) {
+        ${DEFAULT_FIELDS}
+      }
+  }
+  
+`;
+
+  let variables = {
+    id: ID,
+  };
+
+  // Define the config we'll need for our Api request
+  let url = 'https://graphql.anilist.co',
+    options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({
+        query: query,
+        variables: variables,
+      }),
+    };
+
+  let res = await fetch(url, options);
+  let data = await res.json();
+  return data.data.Media;
+}
