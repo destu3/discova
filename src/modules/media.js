@@ -227,7 +227,10 @@ export function showInfo() {
   const ring = overlay.querySelector('.lds-ring');
 
   document.querySelector('body').classList.add('no-scroll');
-  infoModal.classList.add('scaled-def');
+  setTimeout(() => {
+    infoModal.classList.add('scaled-def');
+  }, 250);
+
   overlay.classList.remove('pointer-events-none');
   overlay.classList.remove('opacity-0');
   overlay.addEventListener('click', e => {
@@ -235,9 +238,11 @@ export function showInfo() {
   });
 
   getAnimeInfo(this.dataset.media_id).then(animeInfo => {
-    trailer.src = `https://www.youtube.com/embed/${animeInfo.trailer.id}`;
-    console.log(animeInfo);
     ring.style.display = 'none';
+    setTimeout(() => {
+      trailer.src = `https://www.youtube.com/embed/${animeInfo.trailer.id}`;
+    }, 200);
+    console.log(animeInfo);
   });
 }
 
@@ -247,14 +252,13 @@ export function hideInfo() {
   const ring = overlay.querySelector('.lds-ring');
   const trailer = overlay.querySelector('.trailer');
 
-  trailer.src = '';
   document.querySelector('body').classList.remove('no-scroll');
   overlay.classList.add('pointer-events-none');
   overlay.scrollTo(0, 0);
-  infoModal.classList.remove('scaled-def');
   overlay.classList.add('opacity-0');
-
+  infoModal.classList.remove('scaled-def');
   setTimeout(() => {
     ring.style.display = 'inline-block';
+    trailer.src = '';
   }, 150);
 }

@@ -5,6 +5,8 @@ import {
   hidedets_basic,
   showInfo,
 } from './media';
+import { createSkeletonCard } from './skeleton';
+import { removeAllChildNodes } from './results';
 
 // contains functionality realated to featured sections on landing page
 
@@ -40,33 +42,30 @@ const createSeaction = function (sectName, sectTitle) {
   const mainSection = document.querySelector('main');
   const section = `
   <section
-  class="${sectName} results-container w-full featured-sect relative bottom-6 mt-10 sm:px-0"
->
-  <div class="section-header pb-[20px] flex justify-between items-center">
-    <h2 class="sect-title">${sectTitle}</h2>
-    <a class="text-[var(--main-brand)] text-xs font-light cursor-pointer"
-      >View more</a
+      class="${sectName} results-container w-full featured-sect relative bottom-6 mt-10 sm:px-0"
     >
-  </div>
-  <div class="media-wrapper relative">
-    <div class="lds-ellipsis absolute m-auto right-0 left-0 top-0 bottom-0">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
-  </div>
-</section>
+      <div class="section-header pb-[20px] flex justify-between items-center">
+        <h2 class="sect-title">${sectTitle}</h2>
+        <a class="text-[var(--main-brand)] text-xs font-light cursor-pointer"
+          >View more</a
+        >
+      </div>
+      <div class="media-wrapper relative"></div>
+    </section>
     `;
   mainSection.insertAdjacentHTML('beforeend', section);
   const sectWrapper = document.querySelector(`.${sectName} .media-wrapper`);
+  for (let i = 0; i <= 6; i++) {
+    sectWrapper.insertAdjacentHTML('beforeend', createSkeletonCard());
+  }
+
   return sectWrapper;
 };
 
 const createFeaturedSect = function (sectName, sectTitle, cb) {
   const sectWrapper = createSeaction(sectName, sectTitle);
   cb().then(result => {
-    sectWrapper.querySelector('.lds-ellipsis').style.display = 'none';
+    removeAllChildNodes(sectWrapper, 'skeleton-card');
     result.forEach(anime => {
       const card = createMediaCard(anime);
       sectWrapper.insertAdjacentHTML('beforeend', card);

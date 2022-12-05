@@ -186,6 +186,9 @@ export async function getSrchRslts(searchQuery, pageNum) {
     Page(page: $page, perPage: $perPage) {
       pageInfo {
         total
+        currentPage
+        lastPage
+        hasNextPage
         perPage
       }
       media(search: $search, type: ANIME, sort: POPULARITY_DESC) {

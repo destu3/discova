@@ -19,9 +19,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 let currSearch = null;
 searchBar.forEach(searchBar => {
-  searchBar.addEventListener('input', function (e) {
-    renderResults(this.value);
-    currSearch = this.value;
+  searchBar.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+      document.querySelector('.hero').scrollIntoView({
+        behavior: 'smooth',
+        block: 'end',
+        inline: 'nearest',
+      });
+      renderResults(this.value);
+      currSearch = this.value;
+    }
   });
 });
 
@@ -37,7 +44,7 @@ window.onbeforeunload = function () {
   window.scrollTo(0, 0);
 };
 
-window.addEventListener('scroll', () => {
+window.addEventListener('scroll', function () {
   handleInfiniteScroll(currSearch);
   changeNavColour();
 });

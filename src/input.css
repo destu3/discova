@@ -165,6 +165,11 @@ nav {
   justify-content: space-between;
 }
 
+.skeleton-card > div:first-of-type {
+  width: 160px;
+  height: 229.19px;
+}
+
 /* media queries */
 @media (min-width: 370px) {
   .media-wrapper {
@@ -181,6 +186,11 @@ nav {
   .cover {
     height: 243.51px;
   }
+
+  .skeleton-card > div:first-of-type {
+    width: 170px;
+    height: 243.51px;
+  }
 }
 
 @media (min-width: 461px) {
@@ -192,6 +202,11 @@ nav {
   .cover {
     height: 193.38px;
   }
+
+  .skeleton-card > div:first-of-type {
+    width: 135px;
+    height: 193.38px;
+  }
 }
 
 @media (min-width: 770px) {
@@ -200,6 +215,11 @@ nav {
   }
 
   .cover {
+    height: 265px;
+  }
+
+  .skeleton-card > div:first-of-type {
+    width: 185px;
     height: 265px;
   }
 }
@@ -276,12 +296,12 @@ nav {
 .info-overlay {
   background-color: rgb(0, 0, 0, 0.5);
   overflow-y: auto;
-  transition: all 0.5s ease-in-out;
+  transition: all 0.45s ease-in-out;
 }
 
 .info-modal {
   background: var(--overlay-grey);
-  transition: all 0.5s cubic-bezier(0.51, 0.92, 0.24, 1.15);
+  transition: all 0.45s cubic-bezier(0.51, 0.92, 0.24, 1.15);
   transform: translateY(100%);
 }
 
@@ -295,7 +315,6 @@ nav {
 
 /* loading animations */
 .lds-ring {
-  display: inline-block;
   width: 80px;
   height: 80px;
 }
@@ -326,61 +345,6 @@ nav {
   }
   100% {
     transform: rotate(360deg);
-  }
-}
-
-.lds-ellipsis {
-  display: inline-block;
-  width: 80px;
-  height: 80px;
-}
-.lds-ellipsis div {
-  position: absolute;
-  top: 33px;
-  width: 13px;
-  height: 13px;
-  border-radius: 50%;
-  background: var(--main-brand);
-  animation-timing-function: cubic-bezier(0, 1, 1, 0);
-}
-.lds-ellipsis div:nth-child(1) {
-  left: 8px;
-  animation: lds-ellipsis1 0.6s infinite;
-}
-.lds-ellipsis div:nth-child(2) {
-  left: 8px;
-  animation: lds-ellipsis2 0.6s infinite;
-}
-.lds-ellipsis div:nth-child(3) {
-  left: 32px;
-  animation: lds-ellipsis2 0.6s infinite;
-}
-.lds-ellipsis div:nth-child(4) {
-  left: 56px;
-  animation: lds-ellipsis3 0.6s infinite;
-}
-@keyframes lds-ellipsis1 {
-  0% {
-    transform: scale(0);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-@keyframes lds-ellipsis3 {
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(0);
-  }
-}
-@keyframes lds-ellipsis2 {
-  0% {
-    transform: translate(0, 0);
-  }
-  100% {
-    transform: translate(24px, 0);
   }
 }
 /* end of loading animations */
