@@ -1,4 +1,5 @@
-// config for gql api requests
+// config for Anilist gql api requests
+
 const DEFAULT_FIELDS = `id
   idMal
   title {
@@ -50,6 +51,7 @@ function getYear() {
   return date.getFullYear();
 }
 
+// determines current anime season
 function getSeason() {
   const date = new Date();
   const month = date.getMonth() + 1;
@@ -65,6 +67,7 @@ function getSeason() {
   return season.toUpperCase();
 }
 
+// determines upcoming anime season
 function getNextSeason(season) {
   if (season === 'winter') {
     return 'spring';
@@ -77,6 +80,7 @@ function getNextSeason(season) {
   }
 }
 
+// gql queries and variable for featured section data
 export const QUERIES_AND_VARIABLES = {
   popularAiring: {
     query: `query ($page: Int, $perPage: Int) {
@@ -154,6 +158,7 @@ export const QUERIES_AND_VARIABLES = {
   },
 };
 
+// returns list of anime data
 export async function getMedia(query, variables) {
   let _query = query;
 
@@ -180,6 +185,10 @@ export async function getMedia(query, variables) {
   return data.data.Page.media;
 }
 
+/*
+return list of anime data
+based on a supplied search value
+ */
 export async function getSrchRslts(searchQuery, pageNum) {
   const query = `
   query ($page: Int, $perPage: Int, $search: String) {
@@ -224,6 +233,7 @@ export async function getSrchRslts(searchQuery, pageNum) {
   return data.data.Page.media;
 }
 
+// returns anime data based on an id
 export async function getAnimeInfo(ID) {
   const query = `
   query ($id: Int) {

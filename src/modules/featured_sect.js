@@ -1,15 +1,10 @@
 import { getMedia, QUERIES_AND_VARIABLES } from './gql';
-import {
-  createMediaCard,
-  showdets_basic,
-  hidedets_basic,
-  showInfo,
-} from './media';
+import { createMediaCard, showdets_basic, hidedets_basic } from './media';
 import { createSkeletonCard } from './skeleton';
 import { removeAllChildNodes } from './results';
+import { showInfo } from './overlay';
 
-// contains functionality realated to featured sections on landing page
-
+// gets trending anime data
 const getTrending = function () {
   return getMedia(
     QUERIES_AND_VARIABLES.trending.query,
@@ -17,6 +12,7 @@ const getTrending = function () {
   );
 };
 
+// gets anime data for popular shows (current season)
 const getPopularRn = async function () {
   return getMedia(
     QUERIES_AND_VARIABLES.popularAiring.query,
@@ -24,6 +20,7 @@ const getPopularRn = async function () {
   );
 };
 
+// gets anime data for highly anticipated anime
 const getUpcoming = function () {
   return getMedia(
     QUERIES_AND_VARIABLES.popularNextSeason.query,
@@ -31,6 +28,7 @@ const getUpcoming = function () {
   );
 };
 
+// gets anime data for popular shows (all time)
 const getPopular = function () {
   return getMedia(
     QUERIES_AND_VARIABLES.allTimePopular.query,
@@ -38,6 +36,7 @@ const getPopular = function () {
   );
 };
 
+// creates a featured section component
 const createSeaction = function (sectName, sectTitle) {
   const mainSection = document.querySelector('main');
   const section = `
@@ -62,6 +61,56 @@ const createSeaction = function (sectName, sectTitle) {
   return sectWrapper;
 };
 
+// adds event listeners to media cards
+export const addCardEventListeners = function (mediaCards) {
+  let timeoutId = null;
+
+  mediaCards.forEach(card => {
+    const moreDets = card.querySelector('.more-dets');
+    moreDets.addEventListener('click', function () {
+      showInfo.call(card);
+      hidedets_basic.call(card);
+    });
+
+    if (!window.matchMedia('(pointer: coarse)').matches) {
+      // touchscreen
+      card.addEventListener('mouseenter', function (e) {
+        timeoutId = setTimeout(function () {
+          showdets_basic.call(card);
+        }, 600);
+      });
+    }
+
+    card.addEventListener('click', function (e) {
+      if (
+        e.target.classList.contains('poster') ||
+        e.target.classList.contains('title')
+      ) {
+        showInfo.call(card);
+        console.log(card);
+        hidedets_basic.call(card);
+      }
+    });
+
+    if (!window.matchMedia('(pointer: coarse)').matches) {
+      // touchscreen
+      // cancel function if mouse leaves card before 0.6s
+      card.addEventListener('mouseleave', function () {
+        clearTimeout(timeoutId);
+        hidedets_basic.call(card);
+      });
+    }
+  });
+};
+
+// removes elements from a section if they are not a "div"
+export const onlyDivs = function (sectWrapper) {
+  sectWrapper.childNodes.forEach(child => {
+    if (child.nodeName !== 'DIV') sectWrapper.removeChild(child);
+  });
+};
+
+// renders a featured section component and adds media cards to it
 const createFeaturedSect = function (sectName, sectTitle, cb) {
   const sectWrapper = createSeaction(sectName, sectTitle);
   cb().then(result => {
@@ -70,56 +119,18 @@ const createFeaturedSect = function (sectName, sectTitle, cb) {
       const card = createMediaCard(anime);
       sectWrapper.insertAdjacentHTML('beforeend', card);
     });
-
-    sectWrapper.childNodes.forEach(child => {
-      if (child.nodeName !== 'DIV') sectWrapper.removeChild(child);
-    });
-
-    let timeoutId = null;
+    onlyDivs(sectWrapper);
     const mediaCards = document.querySelectorAll(`.${sectName} .media-card`);
-    mediaCards.forEach(card => {
-      const moreDets = card.querySelector('.more-dets');
-
-      if (!window.matchMedia('(pointer: coarse)').matches) {
-        // touchscreen
-        card.addEventListener('mouseenter', function (e) {
-          timeoutId = setTimeout(function () {
-            showdets_basic.call(card);
-          }, 600);
-        });
-      }
-
-      moreDets.addEventListener('click', function () {
-        showInfo.call(card);
-        hidedets_basic.call(card);
-      });
-
-      card.addEventListener('click', function (e) {
-        if (
-          e.target.classList.contains('poster') ||
-          e.target.classList.contains('title')
-        ) {
-          showInfo.call(card);
-          hidedets_basic.call(card);
-        }
-      });
-
-      if (!window.matchMedia('(pointer: coarse)').matches) {
-        // touchscreen
-        // cancel function if mouse leaves card before 0.6s
-        card.addEventListener('mouseleave', function () {
-          clearTimeout(timeoutId);
-          hidedets_basic.call(card);
-        });
-      }
-    });
+    addCardEventListeners(mediaCards);
   });
 };
 
+// creates "Trending" section
 export const createTrending = function () {
   createFeaturedSect('trending', 'Trending', getTrending);
 };
 
+// creates "Popular this season" section
 export const createPopularRn = function () {
   createFeaturedSect(
     'popular-this-season',
@@ -128,10 +139,12 @@ export const createPopularRn = function () {
   );
 };
 
+// creates "All time popular" section
 export const createPopular = function () {
   createFeaturedSect('popular', 'All time popular', getPopular);
 };
 
+// creates "Upcoming next season" section
 export const createUpcoming = function () {
   createFeaturedSect('upcoming', 'Upcoming next season', getUpcoming);
 };

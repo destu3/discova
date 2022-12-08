@@ -1,9 +1,12 @@
 // contains functionality related to search results
 import { getSrchRslts } from './gql';
 import { createMediaCard } from './media';
-import { hidedets_basic, showdets_basic, showInfo } from './media';
+import { hidedets_basic, showdets_basic } from './media';
 import { createSkeletonCard } from './skeleton';
+import { showInfo } from './overlay';
+import { onlyDivs, addCardEventListeners } from './featured_sect';
 
+// creates a results container component
 function createRsltsSection(searchValue) {
   const mainSection = document.querySelector('main');
   if (document.body.contains(document.querySelector('.featured-sect'))) {
@@ -12,7 +15,6 @@ function createRsltsSection(searchValue) {
       featuredSect.parentNode.removeChild(featuredSect)
     );
   }
-
   const resultsSection = `
   <section class="results results-container w-full relative bottom-6 mt-10 sm:px-0">
     <div class="results-header pb-[30px] flex justify-between items-center">
@@ -21,19 +23,20 @@ function createRsltsSection(searchValue) {
     <div class="media-wrapper min-h-[150px] results relative"></div>
   </section>
   `;
-
   if (document.body.contains(document.querySelector('.results-container')))
     mainSection.removeChild(document.querySelector('.results-container'));
 
   mainSection.insertAdjacentHTML('beforeend', resultsSection);
 
   const wrapper = document.querySelector(`.media-wrapper.results`);
-  for (let i = 0; i <= 19; i++) {
+  // render skeleton components to indicate that content is loading
+  for (let i = 0; i <= 14; i++) {
     wrapper.insertAdjacentHTML('beforeend', createSkeletonCard());
   }
   return wrapper;
 }
 
+// remove all child nodes that have a specified class name
 export function removeAllChildNodes(parent, className) {
   const elements = parent.getElementsByClassName(className);
 
@@ -43,6 +46,7 @@ export function removeAllChildNodes(parent, className) {
 }
 
 let currentPage = null;
+// create media card components and add them to results container
 export async function renderResults(searchTerm) {
   currentPage = 1;
   const rsltsWrapper = createRsltsSection(searchTerm);
@@ -54,52 +58,20 @@ export async function renderResults(searchTerm) {
     rsltsWrapper.insertAdjacentHTML('beforeend', createMediaCard(result));
   });
 
-  rsltsWrapper.childNodes.forEach(child => {
-    if (child.nodeName !== 'DIV') rsltsWrapper.removeChild(child);
-  });
+  onlyDivs(rsltsWrapper);
 
-  let timeoutId = null;
   const mediaCards = document.querySelectorAll(`.results .media-card`);
-  mediaCards.forEach(card => {
-    const moreDets = card.querySelector('.more-dets');
-    if (!window.matchMedia('(pointer: coarse)').matches) {
-      // touchscreen
-      card.addEventListener('mouseenter', function (e) {
-        timeoutId = setTimeout(function () {
-          showdets_basic.call(card);
-        }, 600);
-      });
-    }
-
-    moreDets.addEventListener('click', function () {
-      showInfo.call(card);
-      hidedets_basic.call(card);
-    });
-
-    card.addEventListener('click', function () {
-      showInfo.call(card);
-      hidedets_basic.call(card);
-    });
-
-    if (!window.matchMedia('(pointer: coarse)').matches) {
-      // touchscreen
-      // cancel function if mouse leaves card before 0.6s
-      card.addEventListener('mouseleave', function () {
-        clearTimeout(timeoutId);
-        hidedets_basic.call(card);
-      });
-    }
-  });
+  addCardEventListeners(mediaCards);
 }
 
 let more = true;
+// create more anime cards and add them to container
 export async function renderMore(searchTerm) {
   if (document.body.contains(document.querySelector('.results'))) {
     const checkForMore = await getSrchRslts(searchTerm, currentPage + 1);
     more = checkForMore.length === 0 ? false : true;
-    console.log(more);
     const wrapper = document.querySelector(`.media-wrapper.results`);
-    for (let i = 0; i <= 10; i++) {
+    for (let i = 0; i <= 9; i++) {
       if (more) wrapper.insertAdjacentHTML('beforeend', createSkeletonCard());
     }
     ++currentPage;
@@ -113,32 +85,12 @@ export async function renderMore(searchTerm) {
     return;
   }
 
-  let timeoutId = null;
   const mediaCards = document.querySelectorAll(`.results .media-card`);
-  mediaCards.forEach(card => {
-    if (!window.matchMedia('(pointer: coarse)').matches) {
-      // touchscreen
-      card.addEventListener('mouseenter', function (e) {
-        timeoutId = setTimeout(function () {
-          showdets_basic.call(card);
-        }, 600);
-      });
-    }
-    card.addEventListener('click', function (e) {
-      console.log(this);
-    });
-    if (!window.matchMedia('(pointer: coarse)').matches) {
-      // touchscreen
-      // cancel function if mouse leaves card before 0.6s
-      card.addEventListener('mouseleave', function () {
-        clearTimeout(timeoutId);
-        hidedets_basic.call(card);
-      });
-    }
-  });
+  addCardEventListeners(mediaCards);
 }
 
 let oldScrollY = window.scrollY;
+// loads more results when scrolled to bottom of screen
 export function handleInfiniteScroll(searchTerm) {
   let documentHeight = document.body.scrollHeight;
   let currentScroll = window.scrollY + window.innerHeight;

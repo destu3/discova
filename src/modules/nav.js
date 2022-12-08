@@ -1,7 +1,7 @@
-// contains functinality related to the navbar
 const nav = document.querySelector('nav');
 
 let oldScrollY = window.scrollY;
+// changes navbar colour based on scroll position
 export function changeNavColour() {
   if (oldScrollY < window.scrollY) {
     // scrolling down

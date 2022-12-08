@@ -7,17 +7,40 @@ import {
 import { changeNavColour } from './modules/nav';
 import { alternatePopular } from './modules/hero';
 import { renderResults, handleInfiniteScroll } from './modules/results';
+import { setupThemesAccordion } from './modules/overlay';
+import 'overlayscrollbars/overlayscrollbars.css';
+import { OverlayScrollbars } from 'overlayscrollbars';
 
 // Dom selection
 const searchBar = document.querySelectorAll('.search-param');
 
 // event listners
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   alternatePopular();
   createFeaturedSects();
+  setupThemesAccordion();
+});
+
+window.onbeforeunload = function () {
+  window.scrollTo(0, 0);
+};
+
+window.addEventListener('scroll', function () {
+  handleInfiniteScroll(currSearch);
+  changeNavColour();
+});
+
+// initialize custom scrollbars
+const osSynopsis = OverlayScrollbars(document.querySelector('.synopsis'), {});
+const osModal = OverlayScrollbars(document.querySelector('.info-modal'), {});
+export const osBody = OverlayScrollbars(document.querySelector('body'), {
+  scrollbars: {
+    theme: 'os-theme-light',
+  },
 });
 
 let currSearch = null;
+// get data based on search bar value
 searchBar.forEach(searchBar => {
   searchBar.addEventListener('keydown', function (e) {
     if (e.key === 'Enter') {
@@ -32,6 +55,7 @@ searchBar.forEach(searchBar => {
   });
 });
 
+// render default landing page if searh bar value is empty
 searchBar.forEach(searchBar =>
   searchBar.addEventListener('keyup', function () {
     if (this.value === '')
@@ -40,15 +64,7 @@ searchBar.forEach(searchBar =>
   })
 );
 
-window.onbeforeunload = function () {
-  window.scrollTo(0, 0);
-};
-
-window.addEventListener('scroll', function () {
-  handleInfiniteScroll(currSearch);
-  changeNavColour();
-});
-
+// create featured sections
 function createFeaturedSects() {
   if (document.body.contains(document.querySelector('.results-container'))) {
     const results = document.querySelector('.results-container');

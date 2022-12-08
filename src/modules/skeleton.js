@@ -1,13 +1,14 @@
+// returns a skeleton media card
 export function createSkeletonCard() {
   return `<div
     role="status"
-    class="animate-pulse flex flex-col items-center skeleton-card"
+    class="flex flex-col items-center skeleton-card"
   >
     <div
-      class="flex justify-center items-center w-full rounded bg-gray-700 skeleton-poster"
+      class="flex justify-center items-center w-full rounded bg-[var(--overlay-grey)] skeleton-poster relative overflow-hidden"
     >
       <svg
-        class="w-12 h-12 text-gray-200"
+        class="w-12 h-12 text-gray-200 z-50"
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden="true"
         fill="currentColor"
@@ -18,9 +19,9 @@ export function createSkeletonCard() {
         />
       </svg>
     </div>
-    <div class="w-full skeleton-title pt-2">
-      <div class="h-2.5 rounded-full bg-gray-700 w-full"></div>
-      <div class="h-2.5 rounded-full bg-gray-700 w-[75%] mt-2"></div>
+    <div class="w-full pt-2">
+      <div class="h-2.5 rounded-full skeleton-title bg-[var(--overlay-grey)] w-full relative overflow-hidden"></div>
+      <div class="h-2.5 rounded-full skeleton-title bg-[var(--overlay-grey)] w-[75%] mt-2 relative overflow-hidden"></div>
     </div>
   </div>`;
 }
