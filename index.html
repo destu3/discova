@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-overlayscrollbars-initialize>
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -14,37 +14,34 @@
     />
     <title>Discova - Easily Discover Anime</title>
   </head>
-  <body class="font-roboto min-h-screen">
+  <body class="font-roboto h-full">
     <nav class="w-full h-20">
       <div
-        class="container mx-auto h-full flex items-center px-2 justify-between"
+        class="container mx-auto h-full w-full flex items-center gap-8 justify-between pr-4"
       >
-        <div class="l-handside flex items-center">
-          <a
-            href="./"
-            class="h-fit flex justify-center items-center md:mr-10 mb-2"
+        <div class="l-handside w-fit flex items-center">
+          <a href="./" class="h-14 w-auto"
             ><img
               src="../Discova-1.png"
-              class="inline h-14 w-auto"
+              class="block h-full w-full"
               alt="Discova logo"
           /></a>
-          <ul class="links hidden md:flex gap-6 cursor-pointer">
-            <li>Home</li>
-            <li>My List</li>
-          </ul>
         </div>
-        <div class="r-handside hidden md:block">
-          <div class="search-box">
-            <button class="btn-search font-roboto">
-              <i class="fa-solid fa-search"></i>
-            </button>
+
+        <div class="search__container w-72 md:block hidden flex-1 h-10">
+          <div class="w-[70%] mx-auto h-full flex justify-around items-center">
             <input
+              class="search__input pr-1 search-param w-[90%]"
               type="text"
-              class="search-param input-search"
-              placeholder="Search Discova..."
+              placeholder="Search Discova"
             />
+            <i class="fa-solid fa-magnifying-glass inline-block"></i>
           </div>
         </div>
+        <ul class="links flex gap-6 cursor-pointer pt-[6px] md:pt-0">
+          <li>Home</li>
+          <li>My List</li>
+        </ul>
       </div>
     </nav>
     <section class="swiper h-[200px] lg:h-[400px] top-20 w-full mySwiper hero">
@@ -55,12 +52,12 @@
     </section>
 
     <main class="container top-20 relative pt-10 pb-24 mx-auto px-4">
-      <div class="mobile search__container w-full md:hidden pb-6">
+      <div class="search__container w-full md:hidden pb-6">
         <div class="w-full h-full flex justify-center items-center">
           <input
             class="search__input pr-1 search-param w-[90%]"
             type="text"
-            placeholder="Search Discova..."
+            placeholder="Search Discova"
           />
           <i class="fa-solid fa-magnifying-glass inline-block"></i>
         </div>
@@ -68,23 +65,15 @@
     </main>
 
     <section
-      class="${sectName} results-container w-full featured-sect relative bottom-6 mt-10 sm:px-0"
-    >
-      <div class="section-header pb-[20px] flex justify-between items-center">
-        <h2 class="sect-title">${sectTitle}</h2>
-        <a class="text-[var(--main-brand)] text-xs font-light cursor-pointer"
-          >View more</a
-        >
-      </div>
-      <div class="media-wrapper relative"></div>
-    </section>
-
-    <section
       class="info-overlay fixed left-0 top-0 h-full w-full flex justify-center backdrop-blur-[2px] z-50 opacity-0 pointer-events-none"
     >
       <div
-        class="info-modal min-w-[800px] w-[900px] relative top-20 rounded-md"
+        class="info-modal min-w-[800px] w-[900px] h-[99vh] top-[0.5vh] absolute rounded-md"
+        data-overlayscrollbars-initialize
       >
+        <div
+          class="background bg-[var(--overlay-grey)] fixed top-0 left-0 blur-lg right-0 bottom-0 bg-cover bg-center"
+        ></div>
         <div class="lds-ring absolute m-auto left-0 right-0 top-0 bottom-0">
           <div></div>
           <div></div>
@@ -93,16 +82,128 @@
         </div>
 
         <div
-          class="trailer-container relative w-full overflow-hidden pt-[56.25%]"
+          class="info hidden z-30 absolute top-0 left-0 right-0 bottom-0 p-5"
         >
-          <iframe
-            class="trailer absolute top-0 left-0 right-0 bottom-0 w-full h-full rounded-t-md"
-            src=""
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          ></iframe>
+          <!-- Main info -->
+          <section class="header_poster h-fit relative p-2 rounded-md">
+            <div
+              class="background -z-10 absolute top-0 left-0 right-0 bottom-0 bg-cover bg-center rounded-md"
+            ></div>
+            <div class="main-content flex gap-5 relative">
+              <div
+                class="info-poster-cover rounded-md relative w-[223.40px] h-[320px]"
+              >
+                <img
+                  src=""
+                  class="info-poster hidden rounded-md w-full h-full absolute left-0 top-0 object-cover"
+                  alt="poster"
+                />
+              </div>
+              <div class="main-info flex-1">
+                <h1
+                  class="info-title text-[#f5f5f5] font-semibold text-3xl max-w-[80%] inline"
+                ></h1>
+                <div
+                  class="ml-[2px] release-year inline text text-[var(--main-text)] text-3xl"
+                ></div>
+
+                <div
+                  class="info-genres text-[#cdcdcd] font-medium text-lg mt-2"
+                >
+                  Action, Drama, Sports
+                </div>
+
+                <div class="info-next text-[#cdcdcd] font-medium text-lg mt-2">
+                  Episode 10 airs in 4 days 3 hrs, 38 mins
+                </div>
+                <div
+                  class="flex my-2 gap-8 whitespace-nowrap justify-between pr-10"
+                >
+                  <div class="info-season">
+                    <div class="text-[#cdcdcd] text-lg">Season</div>
+                    <div
+                      class="release-season text-[#f5f5f5] font-medium text-lg relative bottom-[6px]"
+                    ></div>
+                  </div>
+
+                  <div class="info-status">
+                    <div class="text-[#cdcdcd] text-lg">Status</div>
+                    <div
+                      class="anime-status text-[#f5f5f5] font-medium text-lg relative bottom-[6px]"
+                    ></div>
+                  </div>
+
+                  <div class="info-type">
+                    <div class="text-[#cdcdcd] text-lg">Type</div>
+                    <div
+                      class="anime-type text-[#f5f5f5] font-medium text-lg relative bottom-[6px]"
+                    >
+                      TV Show
+                    </div>
+                  </div>
+
+                  <div class="info-episodes">
+                    <div class="text-[#cdcdcd] text-lg">Episodes</div>
+                    <div
+                      class="episodes text-[#f5f5f5] font-medium text-lg relative bottom-[6px]"
+                    ></div>
+                  </div>
+
+                  <div class="info-rating">
+                    <div class="text-[#cdcdcd] text-lg">Rating</div>
+                    <div
+                      class="score-value text-[#f5f5f5] text-lg font-medium relative bottom-[6px]"
+                    ></div>
+                  </div>
+                </div>
+                <div class="info-desc">
+                  <div
+                    class="synopsis h-[135px]"
+                    data-overlayscrollbars-initialize
+                  >
+                    <p
+                      class="info-synopsis pr-1 text-[#cdcdcd] text-base font-medium"
+                    ></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <!-- Themes -->
+
+          <button
+            class="accordion mt-5 rounded-t-md text-[var(--main-text)] cursor-pointer p-5 w-full flex items-center justify-between text-left border-none outline-none"
+          >
+            <div class="acc-name text-lg">Openings</div>
+
+            <select class="openings min-w-[95px] font-roboto"></select>
+          </button>
+
+          <div class="wrapper overflow-hidden">
+            <section
+              class="ops themes relative panel rounded-b-md w-full pb-3"
+              style="
+                transform: translateY(-100%);
+                background-image: linear-gradient(
+                  rgba(30, 30, 30, 0.4),
+                  rgba(30, 30, 30, 0.4)
+                );
+              "
+            >
+              <div
+                class="background -z-30 absolute top-0 left-0 right-0 bottom-0 bg-cover bg-center rounded-md"
+              ></div>
+              <div
+                class="ops videos w-full rounded-md grid grid-cols-1 gap-5 justify-between"
+              >
+                <video
+                  class="rounded-b-md w-full op-theme aspect-video"
+                  src=""
+                  controls
+                ></video>
+              </div>
+            </section>
+          </div>
         </div>
       </div>
     </section>
