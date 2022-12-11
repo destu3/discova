@@ -12,6 +12,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+
     <title>Discova - Easily Discover Anime</title>
   </head>
   <body class="font-roboto h-full">
@@ -68,7 +69,7 @@
       class="info-overlay fixed left-0 top-0 h-full w-full flex justify-center backdrop-blur-[2px] z-50 opacity-0 pointer-events-none"
     >
       <div
-        class="info-modal min-w-[800px] w-[900px] h-[99vh] top-[0.5vh] absolute rounded-md"
+        class="info-modal w-screen h-screen md:min-w-[760px] md:w-[900px] md:h-[99vh] md:top-[0.5vh] absolute rounded-md"
         data-overlayscrollbars-initialize
       >
         <div
@@ -82,16 +83,29 @@
         </div>
 
         <div
-          class="info hidden z-30 absolute top-0 left-0 right-0 bottom-0 p-5"
+          class="info hidden z-30 absolute top-0 left-0 right-0 bottom-0 p-1 md:p-5"
         >
           <!-- Main info -->
+          <div
+            class="sm-screen-title text-center sm:hidden px-2 w-[90%] mx-auto"
+          >
+            <h1
+              class="info-title text-[#f5f5f5] font-semibold text-xl md:text-3xl max-w-[80%] inline"
+            ></h1>
+            <div
+              class="ml-[2px] release-year inline text-[var(--main-text)] text-xl md:text-3xl"
+            ></div>
+          </div>
+
           <section class="header_poster h-fit relative p-2 rounded-md">
             <div
               class="background -z-10 absolute top-0 left-0 right-0 bottom-0 bg-cover bg-center rounded-md"
             ></div>
-            <div class="main-content flex gap-5 relative">
+            <div
+              class="main-content inline-grid gap-2 md:gap-5 relative w-full"
+            >
               <div
-                class="info-poster-cover rounded-md relative w-[223.40px] h-[320px]"
+                class="info-poster-cover rounded-md relative min-h-[182.85px] md:min-h-[323.50px] h-auto"
               >
                 <img
                   src=""
@@ -99,64 +113,64 @@
                   alt="poster"
                 />
               </div>
-              <div class="main-info flex-1">
+              <div class="main-info text-sm sm:text-base md:text-lg">
                 <h1
-                  class="info-title text-[#f5f5f5] font-semibold text-3xl max-w-[80%] inline"
+                  class="info-title hidden sm:inline text-[#f5f5f5] font-semibold text-xl md:text-3xl max-w-[80%]"
                 ></h1>
                 <div
-                  class="ml-[2px] release-year inline text text-[var(--main-text)] text-3xl"
+                  class="ml-[2px] release-year hidden sm:inline text-[var(--main-text)] text-xl md:text-3xl"
                 ></div>
 
                 <div
-                  class="info-genres text-[#cdcdcd] font-medium text-lg mt-2"
-                >
-                  Action, Drama, Sports
-                </div>
+                  class="info-genres text-[var(--main-brand)] font-medium mb-1"
+                ></div>
 
-                <div class="info-next text-[#cdcdcd] font-medium text-lg mt-2">
+                <div class="info-next text-[#f5f5f5] font-medium mb-1">
                   Episode 10 airs in 4 days 3 hrs, 38 mins
                 </div>
+
                 <div
-                  class="flex my-2 gap-8 whitespace-nowrap justify-between pr-10"
+                  class="grid grid-cols-2 sm:grid-cols-3 whitespace-nowrap justify-between"
                 >
                   <div class="info-season">
-                    <div class="text-[#cdcdcd] text-lg">Season</div>
+                    <div class="text-[#cdcdcd]">Season</div>
                     <div
-                      class="release-season text-[#f5f5f5] font-medium text-lg relative bottom-[6px]"
+                      class="release-season text-[#f5f5f5] font-medium relative bottom-[6px]"
                     ></div>
                   </div>
 
                   <div class="info-status">
-                    <div class="text-[#cdcdcd] text-lg">Status</div>
+                    <div class="text-[#cdcdcd]">Status</div>
                     <div
-                      class="anime-status text-[#f5f5f5] font-medium text-lg relative bottom-[6px]"
+                      class="anime-status text-[#f5f5f5] font-medium relative bottom-[6px]"
                     ></div>
                   </div>
 
                   <div class="info-type">
-                    <div class="text-[#cdcdcd] text-lg">Type</div>
+                    <div class="text-[#cdcdcd]">Type</div>
                     <div
-                      class="anime-type text-[#f5f5f5] font-medium text-lg relative bottom-[6px]"
+                      class="anime-type text-[#f5f5f5] font-medium relative bottom-[6px]"
                     >
                       TV Show
                     </div>
                   </div>
 
                   <div class="info-episodes">
-                    <div class="text-[#cdcdcd] text-lg">Episodes</div>
+                    <div class="text-[#cdcdcd]">Episodes</div>
                     <div
-                      class="episodes text-[#f5f5f5] font-medium text-lg relative bottom-[6px]"
+                      class="episodes text-[#f5f5f5] font-medium relative bottom-[6px]"
                     ></div>
                   </div>
 
                   <div class="info-rating">
-                    <div class="text-[#cdcdcd] text-lg">Rating</div>
+                    <div class="text-[#cdcdcd]">Rating</div>
                     <div
-                      class="score-value text-[#f5f5f5] text-lg font-medium relative bottom-[6px]"
+                      class="score-value text-[#f5f5f5] font-medium relative bottom-[6px]"
                     ></div>
                   </div>
                 </div>
-                <div class="info-desc">
+
+                <div class="info-desc hidden md:block mt-1">
                   <div
                     class="synopsis h-[135px]"
                     data-overlayscrollbars-initialize
@@ -169,21 +183,35 @@
               </div>
             </div>
           </section>
-          <!-- Themes -->
 
-          <button
-            class="accordion mt-5 rounded-t-md text-[var(--main-text)] cursor-pointer p-5 w-full flex items-center justify-between text-left border-none outline-none"
+          <div
+            class="sm synopsis px-2 mt-2 md:hidden"
+            data-overlayscrollbars-initialize
           >
-            <div class="acc-name text-lg">Openings</div>
+            <p
+              class="info-synopsis pr-1 text-[#cdcdcd] text-base font-medium"
+            ></p>
+          </div>
 
-            <select class="openings min-w-[95px] font-roboto"></select>
+          <!-- Themes -->
+          <button
+            class="accordion mt-5 rounded-md text-[var(--main-text)] cursor-pointer p-5 w-full flex items-center justify-between text-left border-none outline-none"
+          >
+            <div class="acc-name text-lg">
+              <i class="fa-solid fa-chevron-right mr-3 acc-indicator"></i
+              >Openings
+            </div>
+
+            <select
+              class="text-base openings font-roboto rounded-lg block w-fit md:w-48 p-2 text-[var(--main-text)] cursor-pointer"
+            ></select>
           </button>
 
-          <div class="wrapper overflow-hidden">
+          <div class="wrapper overflow-hidden mt-1">
             <section
-              class="ops themes relative panel rounded-b-md w-full pb-3"
+              class="ops themes relative panel rounded-md w-full pb-3"
               style="
-                transform: translateY(-100%);
+                transform: translateY(0);
                 background-image: linear-gradient(
                   rgba(30, 30, 30, 0.4),
                   rgba(30, 30, 30, 0.4)
@@ -197,7 +225,8 @@
                 class="ops videos w-full rounded-md grid grid-cols-1 gap-5 justify-between"
               >
                 <video
-                  class="rounded-b-md w-full op-theme aspect-video"
+                  class="rounded-md w-full op-theme aspect-video"
+                  autoplay
                   src=""
                   controls
                 ></video>
