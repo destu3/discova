@@ -767,8 +767,8 @@ video {
   height: fit-content;
 }
 
-.h-\[182\.85px\]{
-  height: 182.85px;
+.h-auto{
+  height: auto;
 }
 
 .h-\[135px\]{
@@ -795,16 +795,12 @@ video {
   height: 0.5rem;
 }
 
-.h-auto{
-  height: auto;
+.min-h-\[196\.91px\]{
+  min-height: 196.91px;
 }
 
 .min-h-\[150px\]{
   min-height: 150px;
-}
-
-.min-h-\[182\.85px\]{
-  min-height: 182.85px;
 }
 
 .w-full{
@@ -1129,9 +1125,8 @@ video {
   line-height: 1.75rem;
 }
 
-.text-sm{
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+.text-\[0\.95rem\]{
+  font-size: 0.95rem;
 }
 
 .text-base{
@@ -1167,6 +1162,14 @@ video {
 
 .text-\[8px\]{
   font-size: 8px;
+}
+
+.text-\[0\.9rem\]{
+  font-size: 0.9rem;
+}
+
+.text-\[1rem\]{
+  font-size: 1rem;
 }
 
 .font-semibold{
@@ -1629,7 +1632,7 @@ nav {
 /* end of loading animations */
 
 .main-content {
-  grid-template-columns: 130px auto;
+  grid-template-columns: 140px auto;
 }
 
 @media (min-width: 768px) {
@@ -1718,10 +1721,6 @@ select option {
 
   .md\:h-\[99vh\]{
     height: 99vh;
-  }
-
-  .md\:h-\[323\.50px\]{
-    height: 323.50px;
   }
 
   .md\:min-h-\[323\.50px\]{
