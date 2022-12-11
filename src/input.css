@@ -320,6 +320,16 @@ nav {
 
 /* end of loading animations */
 
+.main-content {
+  grid-template-columns: 130px auto;
+}
+
+@media (min-width: 768px) {
+  .main-content {
+    grid-template-columns: 230px auto;
+  }
+}
+
 .info-synopsis {
   line-height: 1.65em;
 }
@@ -334,10 +344,32 @@ nav {
 }
 
 .accordion:hover {
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .panel {
   transition: transform 0.5s cubic-bezier(0.51, 0.92, 0.24, 1);
   transform-origin: top center;
+}
+
+select:focus {
+  outline: none;
+}
+
+select {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+select option {
+  background: #1b1b1b;
+  color: #e9e6e6;
+  cursor: pointer;
+}
+
+.acc-indicator {
+  transition: all 0.3s ease-in-out;
+}
+
+.acc-indicator.down {
+  transform: rotate(90deg);
 }

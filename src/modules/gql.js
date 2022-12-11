@@ -89,7 +89,7 @@ export const QUERIES_AND_VARIABLES = {
             total
             perPage
           }
-          media(type: ANIME, season: ${getSeason()}, seasonYear: ${getYear()}, sort: POPULARITY_DESC) {
+          media(type: ANIME, season: ${getSeason()}, seasonYear: ${getYear()}, sort: POPULARITY_DESC, isAdult: false) {
             ${DEFAULT_FIELDS}
           }
         }
@@ -109,7 +109,7 @@ export const QUERIES_AND_VARIABLES = {
         }
         media(type: ANIME, status: NOT_YET_RELEASED, season: ${getNextSeason(
           getSeason()
-        ).toUpperCase()}, sort: POPULARITY_DESC) {
+        ).toUpperCase()}, sort: POPULARITY_DESC, isAdult: false) {
           ${DEFAULT_FIELDS}
         }
       }
@@ -127,7 +127,7 @@ export const QUERIES_AND_VARIABLES = {
             total
             perPage
           }
-          media(type: ANIME, sort: POPULARITY_DESC) {
+          media(type: ANIME, sort: POPULARITY_DESC, isAdult: false) {
             ${DEFAULT_FIELDS}
           }
         }
@@ -145,7 +145,7 @@ export const QUERIES_AND_VARIABLES = {
             total
             perPage
           }
-          media(type: ANIME, sort: TRENDING_DESC) {
+          media(type: ANIME, sort: TRENDING_DESC, isAdult: false) {
             ${DEFAULT_FIELDS}
           }
         }
@@ -200,7 +200,7 @@ export async function getSrchRslts(searchQuery, pageNum) {
         hasNextPage
         perPage
       }
-      media(search: $search, type: ANIME, sort: POPULARITY_DESC) {
+      media(search: $search, type: ANIME, sort: POPULARITY_DESC, isAdult: false) {
         ${DEFAULT_FIELDS}
       }
     }

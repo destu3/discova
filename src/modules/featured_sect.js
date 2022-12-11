@@ -87,7 +87,6 @@ export const addCardEventListeners = function (mediaCards) {
         e.target.classList.contains('title')
       ) {
         showInfo.call(card);
-        console.log(card);
         hidedets_basic.call(card);
       }
     });

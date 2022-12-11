@@ -3,17 +3,43 @@ import { removeAllChildNodes } from './results';
 import { osBody } from '..';
 import { displayCountdown } from './media';
 
+// selecting dom nodes on the info-modal
+const overlay = document.querySelector('.info-overlay');
+const infoModal = overlay.querySelector('.info-modal');
+const info = overlay.querySelector('.info');
+const mainContent = overlay.querySelector('.main-content');
+const ring = overlay.querySelector('.lds-ring');
+const background = overlay.querySelector('.background');
+const poster = overlay.querySelector('.info-poster');
+const header = overlay.querySelector('.header_poster .background');
+const rating = overlay.querySelector('.score-value');
+const title = overlay.querySelectorAll('.info-title');
+const relYear = overlay.querySelectorAll('.release-year');
+const genres = overlay.querySelector('.info-genres');
+const relSeason = overlay.querySelector('.release-season');
+const status = overlay.querySelector('.anime-status');
+const type = overlay.querySelector('.anime-type');
+const eps = overlay.querySelector('.episodes');
+const video = overlay.querySelector('.op-theme');
+const vidsCont = overlay.querySelector('.videos');
+const opPanel = overlay.querySelector('.ops.themes');
+const opts = overlay.querySelector('.openings');
+const synopsis = overlay.querySelectorAll('.info-synopsis');
+const accIndicator = overlay.querySelector('.acc-indicator');
+
 // add toggle functionality to accordians
 export function setupThemesAccordion() {
   const accordions = document.querySelectorAll('.accordion');
   accordions.forEach(accordion => {
     accordion.addEventListener('click', function (e) {
-      if (this === e.target) {
+      if (this === e.target || accIndicator === e.target) {
         const themesPanel = document.querySelector('.themes');
         if (themesPanel.style.transform === 'translateY(-100%)') {
           themesPanel.style.transform = 'translateY(0)';
+          accIndicator.classList.add('down');
         } else {
           themesPanel.style.transform = 'translateY(-100%)';
+          accIndicator.classList.remove('down');
         }
       }
     });
@@ -37,7 +63,12 @@ async function getOpenings(animeId) {
 }
 
 function createOption(value, i) {
-  return `
+  if (i === 0)
+    return `
+    <option selected class="op" value="${value}">Opening ${i}</option>           
+  `;
+  else
+    return `
     <option class="op" value="${value}">Opening ${i}</option>           
   `;
 }
@@ -55,29 +86,6 @@ async function getLink(basaename) {
   const data = await res.json();
   return data;
 }
-
-// selecting dom nodes on the info-modal
-const overlay = document.querySelector('.info-overlay');
-const infoModal = overlay.querySelector('.info-modal');
-const info = overlay.querySelector('.info');
-const mainContent = overlay.querySelector('.main-content');
-const ring = overlay.querySelector('.lds-ring');
-const background = overlay.querySelector('.background');
-const poster = overlay.querySelector('.info-poster');
-const header = overlay.querySelector('.header_poster .background');
-const rating = overlay.querySelector('.score-value');
-const title = overlay.querySelector('.info-title');
-const relYear = overlay.querySelector('.release-year');
-const genres = overlay.querySelector('.info-genres');
-const relSeason = overlay.querySelector('.release-season');
-const status = overlay.querySelector('.anime-status');
-const type = overlay.querySelector('.anime-type');
-const eps = overlay.querySelector('.episodes');
-const video = overlay.querySelector('.op-theme');
-const vidsCont = overlay.querySelector('.videos');
-const opPanel = overlay.querySelector('.ops.themes');
-const opts = overlay.querySelector('.openings');
-const synopsis = overlay.querySelector('.info-synopsis');
 
 /* 
 shows detailed information about an anime 
@@ -113,12 +121,13 @@ export function showInfo() {
         });
       }
 
-      // getLink(opts.firstElementChild.value).then(result => {
-      //   video.src = `${result.video.link}`;
-      //   video.addEventListener('loadedmetadata', function () {
-      //     opPanel.style.transform = 'translateY(0)';
-      //   });
-      // });
+      getLink(opts.firstElementChild.value).then(result => {
+        video.src = `${result.video.link}`;
+        video.addEventListener('loadedmetadata', function () {
+          accIndicator.classList.add('down');
+          opPanel.style.transform = 'translateY(0)';
+        });
+      });
     });
 
     opts.addEventListener('change', function () {
@@ -145,14 +154,20 @@ export function showInfo() {
       ? 'NR'
       : animeInfo.averageScore + '%';
 
-    title.textContent = animeInfo.title
-      ? animeInfo.title.english ||
-        animeInfo.title.romaji ||
-        animeInfo.title.native
-      : 'Unknwon';
-    relYear.textContent = animeInfo.seasonYear
-      ? `(${animeInfo.seasonYear})`
-      : ' (Unknown)';
+    title.forEach(
+      title =>
+        (title.textContent = animeInfo.title
+          ? animeInfo.title.english ||
+            animeInfo.title.romaji ||
+            animeInfo.title.native
+          : 'Unknwon')
+    );
+    relYear.forEach(
+      relYear =>
+        (relYear.textContent = animeInfo.seasonYear
+          ? `(${animeInfo.seasonYear})`
+          : ' (Unknown)')
+    );
     genres.textContent = animeInfo.genres
       ? animeInfo.genres.join(', ')
       : 'Unknown';
@@ -166,9 +181,12 @@ export function showInfo() {
       ? formatUpperLower(animeInfo.format)
       : 'Unknown';
     eps.textContent = !animeInfo.episodes ? 'Unknown' : animeInfo.episodes;
-    synopsis.innerHTML = !animeInfo.description
-      ? 'No Synopsis'
-      : animeInfo.description;
+    synopsis.forEach(
+      synopsis =>
+        (synopsis.innerHTML = !animeInfo.description
+          ? 'No Synopsis'
+          : animeInfo.description)
+    );
   });
 }
 
@@ -201,7 +219,9 @@ export function hideInfo() {
   setTimeout(() => {
     toBeErased.forEach(node => (node.textContent = ''));
     video.src = '';
-    overlay.querySelector('.ops.themes').style.transform = 'translateY(-100%)';
+    opPanel.style.transform = 'translateY(-100%)';
+    accIndicator.classList.remove('down');
+    synopsis.forEach(synopsis => (synopsis.innerHTML = ''));
     synopsis.innerHTML = '';
     background.style.backgroundImage = ``;
     header.style.backgroundImage =
