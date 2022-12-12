@@ -31,7 +31,6 @@ window.addEventListener('scroll', function () {
 });
 
 // initialize custom scrollbars
-const osSynopsis = OverlayScrollbars(document.querySelector('.synopsis'), {});
 const osModal = OverlayScrollbars(document.querySelector('.info-modal'), {});
 export const osBody = OverlayScrollbars(document.querySelector('body'), {
   scrollbars: {

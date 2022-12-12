@@ -17,6 +17,13 @@ body {
   background: var(--background-grey);
 }
 
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
 .no-scroll {
   overflow: hidden;
 }
@@ -321,7 +328,7 @@ nav {
 /* end of loading animations */
 
 .main-content {
-  grid-template-columns: 140px auto;
+  grid-template-columns: 135px auto;
 }
 
 @media (min-width: 768px) {
@@ -330,8 +337,75 @@ nav {
   }
 }
 
+.ctas {
+  grid-template-columns: auto auto auto;
+}
+
+.ctas button {
+  transition: all 0.2s ease-in-out;
+  border: 1px solid #f5f5f5;
+  background: rgba(265, 265, 265, 0.1);
+  padding: 4px 7px;
+  color: #f5f5f5;
+  border-radius: 0.25em;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.add:hover,
+.watch-trailer:hover {
+  color: var(--main-brand);
+  border-color: var(--main-brand);
+}
+
 .info-synopsis {
-  line-height: 1.65em;
+  --max-lines: 5;
+  /* --line-height: 1.5;
+  max-height: calc(var(--max-lines) * 1em * var(--line-height));
+  line-height: var(--line-height);
+  overflow: hidden; */
+
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--max-lines);
+}
+
+.expand-btn {
+  transition: all 0.2s ease-in-out;
+  appearance: none;
+  border: 1px solid #cdcdcd;
+  background: rgba(265, 265, 265, 0.1);
+  padding: 3px 0.5em;
+  border-radius: 0.25em;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.expand-btn:hover {
+  background: rgba(265, 265, 265, 0.2);
+}
+
+.expand-btn:checked::before {
+  content: 'Read Less';
+  color: #cdcdcd;
+}
+
+.expand-btn::before {
+  content: 'Read More';
+  color: #cdcdcd;
+}
+
+.sm-screen-title .info-title {
+  --max-lines: 1;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--max-lines);
+}
+
+.info-synopsis:has(+ .expand-btn:checked) {
+  -webkit-line-clamp: 1000;
 }
 
 .accordion {

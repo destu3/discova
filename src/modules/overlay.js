@@ -7,15 +7,14 @@ import { displayCountdown } from './media';
 const overlay = document.querySelector('.info-overlay');
 const infoModal = overlay.querySelector('.info-modal');
 const info = overlay.querySelector('.info');
-const mainContent = overlay.querySelector('.main-content');
 const ring = overlay.querySelector('.lds-ring');
 const background = overlay.querySelector('.background');
 const poster = overlay.querySelector('.info-poster');
 const header = overlay.querySelector('.header_poster .background');
 const rating = overlay.querySelector('.score-value');
 const title = overlay.querySelectorAll('.info-title');
-const relYear = overlay.querySelectorAll('.release-year');
 const genres = overlay.querySelector('.info-genres');
+const nextEp = overlay.querySelectorAll('.info-next');
 const relSeason = overlay.querySelector('.release-season');
 const status = overlay.querySelector('.anime-status');
 const type = overlay.querySelector('.anime-type');
@@ -87,16 +86,71 @@ async function getLink(basaename) {
   return data;
 }
 
+let initialX = null;
+let initialY = null;
+
+function startTouch(e) {
+  initialX = e.touches[0].clientX;
+  initialY = e.touches[0].clientY;
+}
+
+function moveTouch(e) {
+  if (initialX === null) {
+    return;
+  }
+
+  if (initialY === null) {
+    return;
+  }
+
+  let currentX = e.touches[0].clientX;
+  let currentY = e.touches[0].clientY;
+
+  let diffX = initialX - currentX;
+  let diffY = initialY - currentY;
+
+  if (Math.abs(diffX) > Math.abs(diffY)) {
+    // sliding horizontally
+    if (diffX > 0) {
+      // swiped left
+      console.log('swiped left');
+    } else {
+      // swiped right
+      console.log('swiped right');
+    }
+  } else {
+    // sliding vertically
+    if (diffY > 0) {
+      // swiped up
+      console.log('swiped up');
+    } else {
+      // swiped down
+      if (currentY - initialY >= 50) {
+        //swiped for at least 50px
+        console.log('swiped down');
+        hideInfo();
+      }
+    }
+  }
+
+  e.preventDefault();
+}
+
 /* 
 shows detailed information about an anime 
 and disables scrolling on the body
 */
 export function showInfo() {
+  const back = overlay.querySelector('.sm-back-btn');
+  back.addEventListener('click', hideInfo);
   osBody.options({
     overflow: {
       y: 'hidden',
     },
   });
+
+  infoModal.addEventListener('touchstart', startTouch, false);
+  infoModal.addEventListener('touchmove', moveTouch, false);
 
   setTimeout(() => {
     infoModal.classList.add('scaled-def');
@@ -109,6 +163,7 @@ export function showInfo() {
   });
 
   getAnimeInfo(this.dataset.media_id).then(animeInfo => {
+    console.log(animeInfo);
     info.classList.remove('hidden');
     ring.style.display = 'none';
     getOpenings(animeInfo.id).then(result => {
@@ -151,7 +206,7 @@ export function showInfo() {
       poster.classList.remove('hidden');
     });
     rating.textContent = !animeInfo.averageScore
-      ? 'NR'
+      ? '-'
       : animeInfo.averageScore + '%';
 
     title.forEach(
@@ -160,27 +215,23 @@ export function showInfo() {
           ? animeInfo.title.english ||
             animeInfo.title.romaji ||
             animeInfo.title.native
-          : 'Unknwon')
+          : '-')
     );
-    relYear.forEach(
-      relYear =>
-        (relYear.textContent = animeInfo.seasonYear
-          ? `(${animeInfo.seasonYear})`
-          : ' (Unknown)')
+
+    genres.textContent = animeInfo.genres ? animeInfo.genres.join(', ') : '-';
+    nextEp.forEach(
+      nextEp => (nextEp.textContent = displayCountdown(animeInfo))
     );
-    genres.textContent = animeInfo.genres
-      ? animeInfo.genres.join(', ')
-      : 'Unknown';
     relSeason.textContent = animeInfo.season
       ? `${formatUpperLower(animeInfo.season)} ${animeInfo.seasonYear}`
-      : 'Unknown';
+      : '-';
     status.textContent = animeInfo.status
       ? formatUpperLower(animeInfo.status)
-      : 'Unknown';
+      : '-';
     type.textContent = animeInfo.format
       ? formatUpperLower(animeInfo.format)
-      : 'Unknown';
-    eps.textContent = !animeInfo.episodes ? 'Unknown' : animeInfo.episodes;
+      : '-';
+    eps.textContent = !animeInfo.episodes ? '-' : animeInfo.episodes;
     synopsis.forEach(
       synopsis =>
         (synopsis.innerHTML = !animeInfo.description
@@ -195,16 +246,7 @@ hides detailed information about an anime
 and re-enables scrolling on the body
 */
 export function hideInfo() {
-  const toBeErased = [
-    rating,
-    video,
-    title,
-    relYear,
-    genres,
-    status,
-    eps,
-    relSeason,
-  ];
+  const toBeErased = [rating, video, title, genres, status, eps, relSeason];
   osBody.options({
     overflow: {
       y: 'scroll',

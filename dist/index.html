@@ -3,7 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
     <link rel="stylesheet" href="./output.css" />
     <link
       rel="stylesheet"
@@ -69,7 +72,7 @@
       class="info-overlay fixed left-0 top-0 h-full w-full flex justify-center backdrop-blur-[2px] z-50 opacity-0 pointer-events-none"
     >
       <div
-        class="info-modal w-screen h-screen md:min-w-[760px] md:w-[900px] md:h-[99vh] md:top-[0.5vh] absolute rounded-md"
+        class="info-modal w-screen h-screen md:min-w-[760px] md:w-[900px] md:h-[99vh] md:top-[0.5vh] absolute md:rounded-md"
         data-overlayscrollbars-initialize
       >
         <div
@@ -87,15 +90,18 @@
         >
           <!-- Main info -->
           <div
-            class="sm-screen-title text-center sm:hidden px-2 w-[90%] mx-auto"
+            class="sm-screen-title text-center sm:hidden px-2 w-[90%] mx-auto relative"
           >
+            <i
+              class="fa-solid fa-chevron-left text-[#f5f5f5] absolute left-[-10px] sm-back-btn h-fit top-0 bottom-0 my-auto mx-0"
+            ></i>
             <h1
-              class="info-title text-[#f5f5f5] font-semibold text-xl md:text-3xl max-w-[80%] inline"
+              class="info-title text-[#f5f5f5] font-semibold text-lg sm:text-2xl inline"
             ></h1>
-            <div
-              class="ml-[2px] release-year inline text-[var(--main-text)] text-xl md:text-3xl"
-            ></div>
           </div>
+          <div
+            class="info-next text-[#f5f5f5] text-center font-medium mb-1 sm:hidden"
+          ></div>
 
           <section class="header_poster h-fit relative p-2 rounded-md">
             <div
@@ -105,7 +111,7 @@
               class="main-content inline-grid gap-2 md:gap-5 relative w-full"
             >
               <div
-                class="info-poster-cover rounded-md relative min-h-[196.91px] md:min-h-[323.50px] h-auto"
+                class="info-poster-cover rounded-md relative h-[193.38px] md:h-[329.46px]"
               >
                 <img
                   src=""
@@ -113,43 +119,37 @@
                   alt="poster"
                 />
               </div>
-              <div class="main-info text-[0.95rem] sm:text-base md:text-lg">
+              <div class="main-info relative text-base md:text-lg">
                 <h1
-                  class="info-title hidden sm:inline text-[#f5f5f5] font-semibold text-xl md:text-3xl max-w-[80%]"
+                  class="info-title hidden sm:inline text-[#f5f5f5] font-semibold text-lg sm:text-2xl max-w-[80%]"
                 ></h1>
-                <div
-                  class="ml-[2px] release-year hidden sm:inline text-[var(--main-text)] text-xl md:text-3xl"
-                ></div>
-
                 <div
                   class="info-genres text-[var(--main-brand)] font-medium mb-1"
                 ></div>
 
-                <div class="info-next text-[#f5f5f5] font-medium mb-1">
-                  Episode 10 airs in 4 days 3 hrs, 38 mins
-                </div>
-
                 <div
-                  class="grid grid-cols-2 sm:grid-cols-3 whitespace-nowrap justify-between"
-                >
+                  class="info-next hidden sm:block text-[#f5f5f5] font-medium mb-1"
+                ></div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-3 justify-between">
                   <div class="info-season">
                     <div class="text-[#cdcdcd]">Season</div>
                     <div
-                      class="release-season text-[#f5f5f5] font-medium relative bottom-[6px]"
+                      class="release-season text-[#f5f5f5] font-medium relative bottom-[6px] leading-[1.2]"
                     ></div>
                   </div>
 
                   <div class="info-status">
                     <div class="text-[#cdcdcd]">Status</div>
                     <div
-                      class="anime-status text-[#f5f5f5] font-medium relative bottom-[6px]"
+                      class="anime-status text-[#f5f5f5] font-medium relative bottom-[6px] leading-[1.2]"
                     ></div>
                   </div>
 
                   <div class="info-type">
                     <div class="text-[#cdcdcd]">Type</div>
                     <div
-                      class="anime-type text-[#f5f5f5] font-medium relative bottom-[6px]"
+                      class="anime-type text-[#f5f5f5] font-medium relative bottom-[6px] leading-[1.2]"
                     >
                       TV Show
                     </div>
@@ -158,39 +158,42 @@
                   <div class="info-episodes">
                     <div class="text-[#cdcdcd]">Episodes</div>
                     <div
-                      class="episodes text-[#f5f5f5] font-medium relative bottom-[6px]"
+                      class="episodes text-[#f5f5f5] font-medium relative bottom-[6px] leading-[1.2]"
                     ></div>
                   </div>
 
                   <div class="info-rating">
                     <div class="text-[#cdcdcd]">Rating</div>
                     <div
-                      class="score-value text-[#f5f5f5] font-medium relative bottom-[6px]"
+                      class="score-value text-[#f5f5f5] font-medium relative bottom-[6px] leading-[1.2]"
                     ></div>
                   </div>
                 </div>
 
-                <div class="info-desc hidden md:block mt-1">
-                  <div
-                    class="synopsis h-[135px]"
-                    data-overlayscrollbars-initialize
-                  >
-                    <p
-                      class="info-synopsis pr-1 text-[#cdcdcd] text-base font-medium"
-                    ></p>
-                  </div>
+                <div
+                  class="ctas hidden md:inline-grid text-base items-center mt-2 gap-5 w-[80%]"
+                >
+                  <button class="add">Add To List</button>
+                  <button class="watch-trailer">Watch Trailer</button>
+                  <button class="watch-trailer">Watch Trailer</button>
                 </div>
               </div>
             </div>
           </section>
 
           <div
-            class="sm synopsis px-2 mt-2 md:hidden"
-            data-overlayscrollbars-initialize
+            class="ctas md:hidden grid grid-cols-3 text-sm items-center gap-5 mx-1 mt-1 mb-4"
           >
+            <button class="add">Add To List</button>
+            <button class="watch-trailer">Watch Trailer</button>
+            <button class="watch-trailer">Watch Trailer</button>
+          </div>
+
+          <div class="sm synopsis px-2 my-2">
             <p
-              class="info-synopsis pr-1 text-[#cdcdcd] text-base font-medium"
+              class="info-synopsis pr-1 text-[#cdcdcd] text=[0.9rem] sm:text-base font-medium"
             ></p>
+            <input type="checkbox" class="expand-btn" />
           </div>
 
           <!-- Themes -->
@@ -207,9 +210,9 @@
             ></select>
           </button>
 
-          <div class="wrapper overflow-hidden mt-1">
+          <div class="wrapper overflow-hidden mt-1 pb-3">
             <section
-              class="ops themes relative panel rounded-md w-full pb-3"
+              class="ops themes relative panel rounded-md w-full"
               style="
                 transform: translateY(0);
                 background-image: linear-gradient(

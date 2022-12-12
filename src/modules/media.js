@@ -64,19 +64,27 @@ export function createGenreTag(genre, size, textColour, pr = 'pr-0') {
 
 // determines how long until the next episode, if there is one
 export function displayCountdown(media) {
-  if (media.seasonYear === null && media.status === 'NOT_YET_RELEASED') {
+  if (!media.seasonYear && media.status === 'NOT_YET_RELEASED') {
     return 'Coming Soon';
-  } else if (media.status === 'RELEASING') {
-    return toDaysMinutesSeconds(media.nextAiringEpisode?.timeUntilAiring);
   } else if (media.status === 'NOT_YET_RELEASED') {
-    return 'Airing in ' + media.seasonYear;
+    return `Airing in ${media.seasonYear}`;
+  } else if (!media.nextAiringEpisode && media.status === 'RELEASING') {
+    return `Next ep airing in ${toDaysMinutesSeconds(
+      media.nextAiringEpisode?.timeUntilAiring
+    )}`;
+  } else if (media.status === 'RELEASING') {
+    return `Ep ${
+      media.nextAiringEpisode.episode
+    } airing in ${toDaysMinutesSeconds(
+      media.nextAiringEpisode?.timeUntilAiring
+    )}`;
   } else if (
-    (media.status === 'FINISHED' && media.endDate.day === null) ||
-    media.endDate.month === null
+    (media.status === 'FINISHED' && !media.endDate.day) ||
+    !media.endDate.month
   ) {
-    return media.endDate.year;
+    return `Aired in ${media.endDate.year}`;
   } else if (media.status === 'FINISHED') {
-    return `${media.endDate.day}/${media.endDate.month}/${media.endDate.year}`;
+    return `Episode ${media.episodes} aired on ${media.endDate.day}/${media.endDate.month}/${media.endDate.year}`;
   }
 }
 
@@ -190,7 +198,7 @@ direction if it is near the edge of the visualViewport
 function transDir(el) {
   const xCoordinate = el.getBoundingClientRect().x;
   // determine what side of viewport the element is in
-  return xCoordinate < window.innerWidth / 2 ? '150px' : '-150px';
+  return xCoordinate < window.innerWidth / 2 ? '125px' : '-125px';
 }
 
 // shows basic anime details of a card component
@@ -198,7 +206,7 @@ export function showdets_basic() {
   const detailsOverlay = this.querySelector('.details-overlay');
   const cover = this.querySelector('.cover');
   this.style.zIndex = 999;
-  detailsOverlay.style.transform = 'scale(2.5)';
+  detailsOverlay.style.transform = 'scale(2.2)';
   setTimeout(() => {
     cover.style.pointerEvents = 'none';
   }, 300);
